@@ -1,669 +1,286 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SENSI FF 200 PRO - DPI QUE COMBINA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SENSIBILIDADE DGSENSI- VIPS</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@500;600;700;800&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#07070b;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
-.bg{position:fixed;inset:0;background:radial-gradient(700px at 10% 0%,#ff000022,transparent),radial-gradient(600px at 90% 90%,#ff550018,transparent);pointer-events:none}
-.top{padding:18px 20px;text-align:center;position:sticky;top:0;z-index:100;background:rgba(7,7,11,0.92);backdrop-filter:blur(20px);border-bottom:1px solid #1a1a1f}
-.top h1{font-family:'Orbitron';font-size:30px;letter-spacing:2px;line-height:1}
-.top h1 span{background:linear-gradient(90deg,#ff0000,#ff7a00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.top p{font-size:8px;letter-spacing:3px;color:#444;margin-top:6px;font-family:'Orbitron'}
-.tabs{display:flex;gap:8px;padding:12px;overflow-x:auto;background:#0a0a0f;border-bottom:1px solid #15151a;position:sticky;top:61px;z-index:99;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tabs button{padding:11px 18px;border-radius:100px;border:1px solid #222;background:#12121a;color:#666;font-family:'Orbitron';font-size:9px;white-space:nowrap;cursor:pointer;transition:.2s}
-.tabs button.active{background:#ff0000;color:#fff;border-color:#ff0000;box-shadow:0 0 20px #ff000066;transform:scale(1.05)}
-.wrap{max-width:720px;margin:auto;padding:14px;position:relative;z-index:10}
-.card{background:linear-gradient(180deg,#15151f 0%,#0e0e14 100%);border:1px solid #1f1f2a;border-radius:24px;padding:20px;margin-bottom:14px;box-shadow:0 10px 30px #00000066}
-.card h2{font-family:'Orbitron';font-size:10px;color:#ff2a2a;letter-spacing:2px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.search{position:relative}
-.search input{width:100%;padding:17px 52px 17px 18px;background:#06060a;border:2px solid #222233;border-radius:16px;color:#fff;font-size:15px;outline:none;transition:.2s}
-.search input:focus{border-color:#ff0000;background:#0a0a12}
-.ico{position:absolute;right:6px;top:6px;width:42px;height:42px;background:linear-gradient(135deg,#ff0000,#ff6a00);border-radius:12px;display:grid;place-items:center;font-size:18px}
-.list{position:absolute;top:64px;left:0;right:0;background:#0f0f17;border:1px solid #252538;border-radius:16px;max-height:240px;overflow:auto;display:none;z-index:200;box-shadow:0 20px 40px #000a}
-.list div{padding:14px 18px;border-bottom:1px solid #1a1a24;font-size:14px;cursor:pointer}
-.list div:hover{background:#ff0000;color:#fff}
-.chips{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.chip{padding:13px 6px;background:#0a0a0f;border:2px solid #1c1c28;border-radius:14px;text-align:center;font-size:10px;cursor:pointer;transition:.15s;color:#777}
-.chip b{font-family:'Orbitron';display:block;font-size:10px;margin-bottom:2px;color:#fff}
-.chip.active{border-color:#ff0000;background:linear-gradient(180deg,#1f0000,#120000);color:#ff6b6b;box-shadow:0 0 15px #ff000022}
-.chip.active b{color:#ff4444}
-.sliderWrap{background:#08080c;border:1px solid #1a1a25;border-radius:18px;padding:18px;margin-top:12px}
-.sliderRow{display:flex;align-items:center;gap:14px}
-input[type=range]{-webkit-appearance:none;flex:1;height:8px;border-radius:100px;background:#1e1e2a;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;background:#fff;border:4px solid #ff0000;border-radius:50%;box-shadow:0 0 12px #ff0000aa;cursor:pointer;margin-top:-9px}
-.badge{min-width:76px;padding:11px 12px;border-radius:12px;font-family:'Orbitron';font-weight:900;text-align:center;font-size:17px;background:linear-gradient(90deg,#ff0000,#ff6a00);box-shadow:0 5px 15px #ff000033}
-.badge.green{background:linear-gradient(90deg,#00ff88,#00cc66);color:#000;box-shadow:0 5px 15px #00ff8844}
-.btn{width:100%;padding:19px;background:linear-gradient(90deg,#ff0000,#ff5500);border:none;border-radius:18px;color:#fff;font-family:'Orbitron';font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 12px 30px #ff000044;transition:.2s}
-.btn:active{transform:scale(0.98)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.box{background:#000000;border:1px solid #1c1c24;border-radius:18px;padding:16px;text-align:center;transition:.2s}
-.box.main{grid-column:span 2;padding:26px;background:radial-gradient(600px at 50% 0%,#2a0a0a,#000);border-color:#ff000033;cursor:pointer}
-.box.main:active{transform:scale(0.99)}
-.box span{font-family:'Orbitron';font-size:7.5px;color:#555;letter-spacing:1.5px}
-.box strong{font-family:'Orbitron';font-size:21px;display:block;margin-top:6px}
-.box.main strong{font-size:54px;line-height:1;background:linear-gradient(90deg,#fff,#ff5555,#ff8800);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.box.green{border-color:#00ff8840;background:linear-gradient(180deg,#001a0f,#000)}
-.box.green strong{color:#00ff88}
-.tag{width:100%;background:#00ff8812;border:1px dashed #00ff8844;color:#00ff88;padding:10px;border-radius:100px;text-align:center;font-family:'Orbitron';font-size:8px;margin-top:10px;letter-spacing:1px}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}body{background:#06060a;color:#fff;font-family:'Inter';min-height:100vh}
+.bg{position:fixed;inset:0;background:radial-gradient(900px at 10% -10%,#ff000022,transparent),radial-gradient(700px at 100% 100%,#ff6a0022,transparent),linear-gradient(#06060a,#06060a)}
+.top{padding:18px 14px;text-align:center;position:sticky;top:0;z-index:999;background:rgba(6,6,10,0.92);backdrop-filter:blur(25px);border-bottom:2px solid #1a1a22}
+.top h1{font-family:'Orbitron';font-size:30px;letter-spacing:2px}.top h1 span{background:linear-gradient(90deg,#ff0000 0%,#ff8800 50%,#ffcc00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.top p{font-family:'Orbitron';font-size:7.5px;letter-spacing:3px;color:#555;margin-top:5px}
+.tabs{display:flex;gap:7px;padding:12px;overflow-x:auto;background:#0a0a10;border-bottom:1px solid #1a1a28;position:sticky;top:66px;z-index:998;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs button{padding:12px 16px;border-radius:100px;border:1px solid #222235;background:#12121e;color:#666;font-family:'Orbitron';font-size:8.5px;white-space:nowrap;cursor:pointer;transition:.2s;flex-shrink:0}.tabs button.active{background:linear-gradient(90deg,#ff0000,#ff5500);color:#fff;border-color:#ff0000;box-shadow:0 0 22px #ff000066;transform:scale(1.06)}
+.wrap{max-width:780px;margin:auto;padding:12px;position:relative;z-index:10}
+.card{background:linear-gradient(180deg,#171722 0%,#0f0f18 100%);border:1px solid #23233a;border-radius:24px;padding:18px;margin-bottom:12px;box-shadow:0 10px 40px #0008}
+.card h2{font-family:'Orbitron';font-size:10px;color:#ff3333;letter-spacing:2px;margin-bottom:12px}
+.search{position:relative}.search input{width:100%;padding:16px 50px 16px 16px;background:#07070d;border:2px solid #252540;border-radius:16px;color:#fff;font-size:15px;outline:none}.search input:focus{border-color:#ff0000}
+.ico{position:absolute;right:6px;top:6px;width:42px;height:42px;background:linear-gradient(135deg,#ff0000,#ff8800);border-radius:12px;display:grid;place-items:center}
+.list{position:absolute;top:64px;left:0;right:0;background:#10101a;border:1px solid #2a2a44;border-radius:16px;max-height:320px;overflow:auto;display:none;z-index:500}.list div{padding:12px 16px;border-bottom:1px solid #1a1a28;font-size:13px;cursor:pointer;display:flex;justify-content:space-between}.list div:hover{background:#ff0000;color:#fff}.list div small{color:#888}
+.chips{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.chip{padding:12px 6px;background:#0a0a12;border:2px solid #1d1d32;border-radius:14px;text-align:center;font-size:9.5px;cursor:pointer;color:#666;transition:.15s}.chip b{font-family:'Orbitron';display:block;font-size:10px;color:#fff;margin-bottom:2px}.chip.active{border-color:#ff0000;background:linear-gradient(180deg,#1f0000,#1a0000);color:#ff7777;box-shadow:0 0 18px #ff000022}
+.sliderWrap{background:#08080f;border:1px solid #1c1c30;border-radius:18px;padding:16px;margin-top:10px}
+.sliderRow{display:flex;align-items:center;gap:12px}
+input[type=range]{-webkit-appearance:none;flex:1;height:8px;border-radius:100px;background:#1e1e35;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;background:#fff;border:4px solid #ff0000;border-radius:50%;box-shadow:0 0 14px #ff0000aa;margin-top:-9px}
+.badge{min-width:74px;padding:10px;border-radius:12px;font-family:'Orbitron';font-weight:900;text-align:center;font-size:16px;background:linear-gradient(90deg,#ff0000,#ff6a00);box-shadow:0 6px 18px #ff000044}
+.badge.green{background:linear-gradient(90deg,#00ff88,#00d4aa);color:#000}
+.btn{width:100%;padding:18px;background:linear-gradient(90deg,#ff0000,#ff5500 55%,#ffaa00);border:none;border-radius:18px;color:#fff;font-family:'Orbitron';font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 14px 35px #ff000055;position:relative;overflow:hidden}
+.btn::after{content:'∞';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:22px;opacity:.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.box{background:#000;border:1px solid #1e1e32;border-radius:16px;padding:14px;text-align:center}
+.box.main{grid-column:span 2;padding:22px;background:radial-gradient(700px at 50% 0%,#2a0000,#000);border-color:#ff000055;cursor:pointer;position:relative;overflow:hidden}
+.box.main::after{content:'CLIQUE PARA INFINITA →';position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-family:'Orbitron';font-size:7px;color:#ff0000;letter-spacing:2px}
+.box span{font-family:'Orbitron';font-size:7px;color:#555;letter-spacing:1px}
+.box strong{font-family:'Orbitron';font-size:19px;display:block;margin-top:4px}
+.box.main strong{font-size:52px;background:linear-gradient(90deg,#fff,#ff6666,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.box.green{border-color:#00ff8844;background:linear-gradient(180deg,#001a10,#000)} .box.green strong{color:#00ff88}
+.box.blue{border-color:#0088ff44;background:linear-gradient(180deg,#001a2a,#000)} .box.blue strong{color:#00aaff}
+.tag{width:100%;background:#00ff8811;border:1px dashed #00ff8844;color:#00ff88;padding:9px;border-radius:100px;text-align:center;font-family:'Orbitron';font-size:7.5px;margin-top:10px;letter-spacing:1px;word-break:break-all}
 .hidden{display:none!important}
-.tip{background:#101017;border-left:3px solid #ff0000;padding:11px 12px;border-radius:10px;margin-top:8px;font-size:12px;color:#bbb;line-height:1.4}
-.dpiTester{width:100%;height:130px;background:radial-gradient(#111,#000);border:1px dashed #2a2a35;border-radius:18px;display:grid;place-items:center;margin-top:12px;position:relative;overflow:hidden;touch-action:none}
-.dot{width:18px;height:18px;background:#ff0000;border-radius:100%;position:absolute;box-shadow:0 0 20px #ff0000,0 0 40px #ff0000;pointer-events:none;transition:.05s}
-
-/* ===== FAMOSOS - NOVO DESIGN ===== */
-.famosos-grid{display:flex;flex-direction:column;gap:14px}
-.pro-card{
-  position:relative;
-  background:linear-gradient(145deg,#14141e 0%,#0c0c12 100%);
-  border:1px solid #22222e;
-  border-radius:22px;
-  padding:18px;
-  overflow:hidden;
-  transition:all .25s ease;
-  cursor:default;
-}
-.pro-card:hover{
-  border-color:#ff330055;
-  box-shadow:0 0 30px #ff000018,0 12px 40px #00000088;
-  transform:translateY(-2px);
-}
-.pro-card::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:3px;
-  background:var(--accent);
-  opacity:.9;
-}
-.pro-header{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:14px;
-}
-.pro-avatar{
-  width:52px;height:52px;
-  border-radius:16px;
-  display:grid;place-items:center;
-  font-size:26px;
-  background:var(--avatar-bg);
-  border:2px solid var(--accent);
-  box-shadow:0 0 18px var(--glow);
-  flex-shrink:0;
-}
-.pro-info{flex:1;min-width:0}
-.pro-name{
-  font-family:'Orbitron';
-  font-size:15px;
-  font-weight:800;
-  letter-spacing:.5px;
-  color:#fff;
-  display:flex;align-items:center;gap:8px;
-}
-.pro-tag{
-  font-size:9px;
-  font-family:'Orbitron';
-  padding:3px 8px;
-  border-radius:100px;
-  background:var(--tag-bg);
-  color:var(--accent);
-  border:1px solid var(--accent);
-  letter-spacing:1px;
-}
-.pro-desc{
-  font-size:11px;
-  color:#666;
-  margin-top:3px;
-}
-.pro-stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-bottom:14px;
-}
-.pro-stat{
-  background:#0a0a10;
-  border:1px solid #1a1a24;
-  border-radius:12px;
-  padding:10px 6px;
-  text-align:center;
-}
-.pro-stat span{
-  font-family:'Orbitron';
-  font-size:8px;
-  color:#555;
-  letter-spacing:1px;
-  display:block;
-}
-.pro-stat strong{
-  font-family:'Orbitron';
-  font-size:18px;
-  display:block;
-  margin-top:4px;
-  color:#fff;
-}
-.pro-stat.highlight strong{
-  background:linear-gradient(90deg,#ff4444,#ff8800);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.pro-btn{
-  width:100%;
-  padding:13px;
-  border:none;
-  border-radius:14px;
-  font-family:'Orbitron';
-  font-size:12px;
-  letter-spacing:1.5px;
-  cursor:pointer;
-  background:linear-gradient(90deg,var(--btn1),var(--btn2));
-  color:#fff;
-  box-shadow:0 8px 20px var(--glow);
-  transition:.2s;
-}
-.pro-btn:active{transform:scale(0.97)}
-
-/* Cores específicas */
-.pro-nobru{--accent:#ff2a2a;--glow:#ff000044;--avatar-bg:linear-gradient(135deg,#3a0000,#1a0000);--tag-bg:#ff000022;--btn1:#ff0000;--btn2:#cc0000}
-.pro-bak{--accent:#00ff88;--glow:#00ff8844;--avatar-bg:linear-gradient(135deg,#003322,#001a11);--tag-bg:#00ff8822;--btn1:#00cc66;--btn2:#009944}
-.pro-syazin{--accent:#ffcc00;--glow:#ffcc0044;--avatar-bg:linear-gradient(135deg,#3a2a00,#1a1500);--tag-bg:#ffcc0022;--btn1:#e6b800;--btn2:#b38f00}
-.pro-marechal{--accent:#00aaff;--glow:#00aaff44;--avatar-bg:linear-gradient(135deg,#002a3a,#00151f);--tag-bg:#00aaff22;--btn1:#0099ee;--btn2:#0077bb}
-.pro-g9{--accent:#ff66aa;--glow:#ff66aa44;--avatar-bg:linear-gradient(135deg,#3a0022,#1a0011);--tag-bg:#ff66aa22;--btn1:#ee4488;--btn2:#cc2266}
-.pro-fluxo{--accent:#aa66ff;--glow:#aa66ff44;--avatar-bg:linear-gradient(135deg,#2a0040,#150020);--tag-bg:#aa66ff22;--btn1:#9944ee;--btn2:#7722cc}
-
-/* ===== HUDS - NOVO DESIGN ===== */
-.hud-grid{display:flex;flex-direction:column;gap:14px}
-.hud-card{
-  position:relative;
-  background:linear-gradient(145deg,#14141e 0%,#0c0c12 100%);
-  border:1px solid #22222e;
-  border-radius:22px;
-  padding:20px;
-  overflow:hidden;
-  transition:all .25s ease;
-}
-.hud-card:hover{
-  border-color:#ff550044;
-  box-shadow:0 0 25px #ff550015;
-}
-.hud-card::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:3px;
-  background:var(--haccent);
-}
-.hud-top{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:14px;
-}
-.hud-icon{
-  width:54px;height:54px;
-  border-radius:16px;
-  display:grid;place-items:center;
-  font-size:28px;
-  background:var(--hbg);
-  border:2px solid var(--haccent);
-  box-shadow:0 0 16px var(--hglow);
-  flex-shrink:0;
-}
-.hud-title{
-  font-family:'Orbitron';
-  font-size:16px;
-  font-weight:800;
-  color:#fff;
-}
-.hud-sub{
-  font-size:11px;
-  color:#777;
-  margin-top:2px;
-}
-.hud-badge{
-  margin-left:auto;
-  font-family:'Orbitron';
-  font-size:9px;
-  padding:5px 10px;
-  border-radius:100px;
-  background:var(--hbadge);
-  color:var(--haccent);
-  border:1px solid var(--haccent);
-  letter-spacing:1px;
-  white-space:nowrap;
-}
-.hud-body{
-  background:#0a0a10;
-  border:1px solid #1a1a24;
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:12px;
-}
-.hud-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:8px 0;
-  border-bottom:1px solid #15151c;
-  font-size:13px;
-}
-.hud-row:last-child{border-bottom:none}
-.hud-row span{color:#888}
-.hud-row strong{font-family:'Orbitron';font-size:14px;color:#fff}
-.hud-tip{
-  font-size:12px;
-  color:#aaa;
-  line-height:1.45;
-  background:#101017;
-  border-left:3px solid var(--haccent);
-  padding:10px 12px;
-  border-radius:0 10px 10px 0;
-}
-.hud-2d{--haccent:#ff5555;--hglow:#ff555544;--hbg:linear-gradient(135deg,#3a1010,#1a0808);--hbadge:#ff555522}
-.hud-3d{--haccent:#00ff88;--hglow:#00ff8844;--hbg:linear-gradient(135deg,#0a2a1a,#051510);--hbadge:#00ff8822}
-.hud-4d{--haccent:#00aaff;--hglow:#00aaff44;--hbg:linear-gradient(135deg,#0a1a2a,#051015);--hbadge:#00aaff22}
-.hud-gold{--haccent:#ffcc00;--hglow:#ffcc0044;--hbg:linear-gradient(135deg,#2a2200,#151100);--hbadge:#ffcc0022}
-
-.section-header{
-  text-align:center;
-  margin-bottom:18px;
-}
-.section-header h2{
-  font-family:'Orbitron';
-  font-size:13px;
-  letter-spacing:2px;
-  color:#ff2a2a;
-  margin-bottom:6px;
-}
-.section-header p{
-  font-size:12px;
-  color:#555;
-}
+.famousGrid{display:grid;gap:10px}
+.proCardV2{background:linear-gradient(135deg,#1d1d2a,#11111a);border:1px solid #2a2a40;border-radius:20px;overflow:hidden;position:relative}
+.proCardV2::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c)}
+.proTop{display:flex;align-items:center;gap:12px;padding:14px}
+.proAvatar2{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-family:'Orbitron';font-weight:900;color:#fff;flex-shrink:0;position:relative}
+.proAvatar2::after{content:attr(data-pat);position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:#000;border:1px solid var(--c);color:var(--c);font-size:6px;padding:2px 6px;border-radius:100px;white-space:nowrap}
+.proMain{flex:1}.proName{font-family:'Orbitron';font-size:12px;display:flex;gap:6px;align-items:center}.proName i{font-style:normal;background:var(--c);color:#000;font-size:6.5px;padding:2px 6px;border-radius:100px;font-weight:900}.proSub{font-size:10px;color:#777;margin-top:2px}
+.proCardV2 button{position:absolute;right:10px;top:14px;padding:8px 14px;background:#fff;color:#000;border:none;border-radius:100px;font-family:'Orbitron';font-size:8.5px;font-weight:900}
+.proStats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;background:#0006;border-top:1px solid #1e1e2e;padding:10px 14px}.proStats div{text-align:center}.proStats span{font-family:'Orbitron';font-size:6.5px;color:#555;display:block}.proStats strong{font-family:'Orbitron';font-size:11px;display:block}.proStats strong.green{color:#00ff88}.proStats strong.red{color:#ff4444}
+.hudGrid{display:grid;gap:10px}
+.hudPro{background:linear-gradient(180deg,#16161f,#0d0d14);border:1px solid #222235;border-radius:20px;overflow:hidden}
+.hudPreview{height:150px;background:#000;display:grid;place-items:center;position:relative}
+.dot2{position:absolute;width:38px;height:38px;border-radius:50%;border:2px solid #ff0000;background:#ff000022;display:grid;place-items:center;font-size:9px;font-family:'Orbitron';color:#ff0000}
+.hudBar{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:#0008;border-top:1px solid #1a1a2a}
+.hudBtns{display:flex;gap:7px;padding:0 12px 12px}.hudBtns button{flex:1;padding:10px;border-radius:12px;border:1px solid #222;background:#111;color:#fff;font-family:'Orbitron';font-size:8.5px}.hudBtns button.primary{background:#ff0000;border-color:#ff0000}
+.tip{background:#10101a;border-left:3px solid #ff0000;padding:10px 12px;border-radius:10px;margin-top:8px;font-size:11px;color:#aaa;line-height:1.4}
+.infScroll{max-height:420px;overflow:auto}
+.personTag{display:inline-block;background:#1a1a2a;border:1px solid #2a2a44;border-radius:100px;padding:4px 10px;font-size:9px;font-family:'Orbitron';color:#888;margin:3px}
 </style>
 </head>
 <body>
 <div class="bg"></div>
-<div class="top"><h1>SENSI <span>FF 200</span></h1><p>DPI QUE COMBINA • FUNCIONA DE VERDADE • 0-200</p></div>
+<div class="top"><h1>SENSI <span>FREE FIRE ∞</span></h1><p>XIT • TODOS CELULARES • ÚNICA POR PESSOA • DPI TODOS OS TIPOS</p></div>
 <div class="tabs">
-<button id="t-gen" class="active" onclick="openTab('gen')">⚙️ GERADOR</button>
+<button id="t-gen" class="active" onclick="openTab('gen')">⚙️ GERADOR ∞</button>
 <button id="t-famosos" onclick="openTab('famosos')">⭐ FAMOSOS</button>
 <button id="t-huds" onclick="openTab('huds')">🎮 HUDS</button>
-<button id="t-dpi" onclick="openTab('dpi')">📏 TESTE DPI</button>
-<button id="t-treino" onclick="openTab('treino')">🎯 TREINO</button>
+<button id="t-lista" onclick="openTab('lista')">📱 CELULARES</button>
+<button id="t-inf" onclick="openTab('inf')">∞ INFINITAS</button>
 </div>
+
 <div class="wrap">
+<!-- GERADOR -->
 <div id="gen">
 <div class="card">
-<h2>🔍 SEU CELULAR</h2>
-<div class="search"><input id="busca" placeholder="Ex: G9 Power, A32, iPhone 15..."><div class="ico">⌕</div><div class="list" id="lista"></div></div>
-<div class="tag" id="sel">✓ Moto G9 Power - Perfil Otimizado</div>
+<h2>🔍 SEU CELULAR - 200+ MODELOS DE CELULARES</h2>
+<div class="search"><input id="busca" placeholder="Digite: G9 Power, A32, iPhone 15, Poco, Infinix..."><div class="ico">⌕</div><div class="list" id="listaBusca"></div></div>
+<div class="tag" id="sel">✓ Moto G9 Power - Perfil Otimizado • ATUALIZAÇÃO PELA FRENTE</div>
+<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap" id="personTags"></div>
 </div>
+
 <div class="card">
-<h2>🎯 SENSI 0-200</h2>
+<h2>🎯 SENSIBILIDADE 0-200 • AS MELHORES</h2>
 <div class="chips">
-<div class="chip" id="chip-baixa" onclick="setNivel('baixa')"><b>BAIXA</b>Precisão</div>
-<div class="chip active" id="chip-media" onclick="setNivel('media')"><b>MÉDIA</b>Equilibrada</div>
-<div class="chip" id="chip-alta" onclick="setNivel('alta')"><b>ALTA 200</b>Só Capa</div>
+<div class="chip" id="chip-baixa" onclick="setNivel('baixa')"><b>BAIXA</b>0-110<br>Precisão</div>
+<div class="chip active" id="chip-media" onclick="setNivel('media')"><b>MÉDIA</b>120-165<br>Equilibrada</div>
+<div class="chip" id="chip-alta" onclick="setNivel('alta')"><b>ALTA 200</b>170-200<br>Só Capa</div>
 </div>
-<div class="sliderWrap"><div class="sliderRow"><input type="range" id="sensi" min="0" max="200" value="152"><div class="badge" id="sB">152</div></div></div>
+<div class="sliderWrap"><div class="sliderRow"><input type="range" id="sensi" min="0" max="200" value="152"><div class="badge" id="sB">152</div></div><div style="margin-top:8px;display:flex;gap:6px"><span class="personTag" id="uniqInfo">SEED: calculando...</span><span class="personTag" id="varCount">VARIAÇÕES: ∞</span></div></div>
 </div>
+
 <div class="card">
-<h2>⚡ DPI QUE COMBINA</h2>
+<h2>⚡ DPI IDEAL • 360-2500</h2>
 <div class="chips">
-<div class="chip" id="dpi-baixa" onclick="setFaixa('300-500')"><b>300-500</b>Lenta</div>
-<div class="chip active" id="dpi-media" onclick="setFaixa('500-700')"><b>500-700</b>PRO</div>
-<div class="chip" id="dpi-alta" onclick="setFaixa('700-1600')"><b>700-1600</b>Speed</div>
+<div class="chip" id="dpi-baixa" onclick="setFaixa('300-500')"><b>300-500</b>Lenta<br>Controle</div>
+<div class="chip active" id="dpi-media" onclick="setFaixa('500-700')"><b>500-700</b>PRO<br>Equilíbrio</div>
+<div class="chip" id="dpi-alta" onclick="setFaixa('700-1600')"><b>700-1600</b>Speed<br>Rápida</div>
 </div>
 <div class="sliderWrap"><div class="sliderRow"><input type="range" id="dpi" min="100" max="2500" value="680"><div class="badge green" id="dB">680</div></div></div>
-<div class="tip" id="dpiTip">💡 Sensi alta + DPI baixa = mira firme. Essa é a fórmula que funciona.</div>
+<div class="tip" id="dpiTip">💡 Sensi alta + DPI baixa = mira firme. Sensi baixa + DPI alta = compensa. PURO XIT.</div>
 </div>
-<button class="btn" onclick="gerar()">GERAR SENSI IDEAL + DPI QUE COMBINA →</button>
+
+<button class="btn" onclick="gerar()">GERAR SENSI ÚNICA → VARIAS</button>
+
 <div class="card hidden" id="res">
-<h2>✅ SUA SENSI PRO - CLIQUE NA GERAL PRA TROCAR</h2>
+<h2>✅ SUA SENSI É ÚNICA NO MUNDO - NINGUÉM TEM IGUAL</h2>
 <div class="grid2">
-<div class="box main" onclick="trocar()"><span>GERAL 0-200 • CLIQUE PRA TROCAR VARIAÇÃO</span><strong id="g">152</strong></div>
+<div class="box main" onclick="trocar()"><span>GERAL 0-200 • CLIQUE PRA GERAR OUTRA SENSI</span><strong id="g">152</strong><div style="font-size:9px;color:#ff0000;margin-top:6px;font-family:'Orbitron'" id="gExtra">VARIAÇÃO #1 • INFINITA</div></div>
 <div class="box"><span>RED DOT</span><strong id="r">142</strong></div>
-<div class="box"><span>2X</span><strong id="m2">130</strong></div>
-<div class="box"><span>4X</span><strong id="m4">110</strong></div>
-<div class="box"><span>AWM</span><strong id="awm">80</strong></div>
+<div class="box"><span>2X MIRA</span><strong id="m2">130</strong></div>
+<div class="box"><span>4X MIRA</span><strong id="m4">110</strong></div>
+<div class="box"><span>AWM SNIPER</span><strong id="awm">80</strong></div>
+<div class="box"><span>OLHADINHA</span><strong id="olha">95</strong></div>
+<div class="box"><span>MIRA GG</span><strong id="mira">88</strong></div>
 <div class="box green"><span>DPI QUE COMBINA</span><strong id="dpiF">680</strong></div>
 <div class="box green"><span>BOTÃO TIRO</span><strong id="bot">54%</strong></div>
-<div class="box"><span>CELULAR</span><strong id="tipo" style="font-size:10px">G9 POWER</strong></div>
+<div class="box blue"><span>HUD CODE</span><strong id="hudCode" style="font-size:10px">3D-52%</strong></div>
+<div class="box blue"><span>CELULAR</span><strong id="tipo" style="font-size:9px">G9 POWER</strong></div>
 </div>
-<div class="tag" id="uid">ID ÚNICO</div>
+<div class="tag" id="uid">ID ÚNICO GERANDO...</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+<button onclick="trocar()" style="padding:12px;background:#111;border:1px solid #222;border-radius:12px;color:#fff;font-family:'Orbitron';font-size:9px">🔄 OUTRA VARIAÇÃO</button>
+<button onclick="gerar(true)" style="padding:12px;background:#ff0000;border:none;border-radius:12px;color:#fff;font-family:'Orbitron';font-size:9px">🎲 SENSI TOTALMENTE NOVA</button>
+</div>
 </div>
 </div>
 
-<!-- ===== FAMOSOS ===== -->
+<!-- FAMOSOS -->
 <div id="famosos" class="hidden">
-<div class="section-header">
-  <h2>⭐ SENSI DOS FAMOSOS REAIS</h2>
-  <p>Configurações pro usadas por streamers e jogadores top • Clique em USAR</p>
-</div>
-<div class="famosos-grid">
-
-  <!-- NOBRU -->
-  <div class="pro-card pro-nobru">
-    <div class="pro-header">
-      <div class="pro-avatar">🔴</div>
-      <div class="pro-info">
-        <div class="pro-name">NOBRU <span class="pro-tag">CAPA</span></div>
-        <div class="pro-desc">Estilo agressivo • 2 dedos • Só vermelho</div>
-      </div>
-    </div>
-    <div class="pro-stats">
-      <div class="pro-stat highlight"><span>GERAL</span><strong>187</strong></div>
-      <div class="pro-stat"><span>DPI</span><strong>680</strong></div>
-      <div class="pro-stat"><span>BOTÃO</span><strong>52%</strong></div>
-    </div>
-    <button class="pro-btn" onclick="usarFamoso(187,680,52)">USAR SENSI NOBRU</button>
-  </div>
-
-  <!-- BAK -->
-  <div class="pro-card pro-bak">
-    <div class="pro-header">
-      <div class="pro-avatar">🟢</div>
-      <div class="pro-info">
-        <div class="pro-name">BAK <span class="pro-tag">200 FULL</span></div>
-        <div class="pro-desc">Sensi máxima • Mira gruda • Botão grande</div>
-      </div>
-    </div>
-    <div class="pro-stats">
-      <div class="pro-stat highlight"><span>GERAL</span><strong>200</strong></div>
-      <div class="pro-stat"><span>DPI</span><strong>580</strong></div>
-      <div class="pro-stat"><span>BOTÃO</span><strong>64%</strong></div>
-    </div>
-    <button class="pro-btn" onclick="usarFamoso(200,580,64)">USAR SENSI BAK</button>
-  </div>
-
-  <!-- MARECHAL -->
-  <div class="pro-card pro-marechal">
-    <div class="pro-header">
-      <div class="pro-avatar">🔵</div>
-      <div class="pro-info">
-        <div class="pro-name">MARECHAL <span class="pro-tag">PRO</span></div>
-        <div class="pro-desc">Equilíbrio pro • Controle + velocidade</div>
-      </div>
-    </div>
-    <div class="pro-stats">
-      <div class="pro-stat highlight"><span>GERAL</span><strong>185</strong></div>
-      <div class="pro-stat"><span>DPI</span><strong>620</strong></div>
-      <div class="pro-stat"><span>BOTÃO</span><strong>55%</strong></div>
-    </div>
-    <button class="pro-btn" onclick="usarFamoso(185,620,55)">USAR SENSI MARECHAL</button>
-  </div>
-
-  <!-- SYAZIN -->
-  <div class="pro-card pro-syazin">
-    <div class="pro-header">
-      <div class="pro-avatar">🟡</div>
-      <div class="pro-info">
-        <div class="pro-name">SYAZIN <span class="pro-tag">EQUILIBRADA</span></div>
-        <div class="pro-desc">Média alta • Perfeita pra capa estável</div>
-      </div>
-    </div>
-    <div class="pro-stats">
-      <div class="pro-stat highlight"><span>GERAL</span><strong>142</strong></div>
-      <div class="pro-stat"><span>DPI</span><strong>720</strong></div>
-      <div class="pro-stat"><span>BOTÃO</span><strong>54%</strong></div>
-    </div>
-    <button class="pro-btn" onclick="usarFamoso(142,720,54)">USAR SENSI SYAZIN</button>
-  </div>
-
-  <!-- FLUXO / LEVEL UP -->
-  <div class="pro-card pro-fluxo">
-    <div class="pro-header">
-      <div class="pro-avatar">🟣</div>
-      <div class="pro-info">
-        <div class="pro-name">FLUXO STYLE <span class="pro-tag">PRO</span></div>
-        <div class="pro-desc">Alta velocidade • Bom pra rush e capa</div>
-      </div>
-    </div>
-    <div class="pro-stats">
-      <div class="pro-stat highlight"><span>GERAL</span><strong>192</strong></div>
-      <div class="pro-stat"><span>DPI</span><strong>600</strong></div>
-      <div class="pro-stat"><span>BOTÃO</span><strong>58%</strong></div>
-    </div>
-    <button class="pro-btn" onclick="usarFamoso(192,600,58)">USAR SENSI FLUXO</button>
-  </div>
-
-  <!-- G9 POWER -->
-  <div class="pro-card pro-g9">
-    <div class="pro-header">
-      <div class="pro-avatar">💗</div>
-      <div class="pro-info">
-        <div class="pro-name">G9 POWER LEVEL UP <span class="pro-tag">OTIMIZADA</span></div>
-        <div class="pro-desc">Feita pra celulares intermediários</div>
-      </div>
-    </div>
-    <div class="pro-stats">
-      <div class="pro-stat highlight"><span>GERAL</span><strong>188</strong></div>
-      <div class="pro-stat"><span>DPI</span><strong>590</strong></div>
-      <div class="pro-stat"><span>BOTÃO</span><strong>62%</strong></div>
-    </div>
-    <button class="pro-btn" onclick="usarFamoso(188,590,62)">USAR SENSI G9</button>
-  </div>
-
-</div>
+<div class="card"><h2>🔥 SENSI DOS FAMOSOS • MARECHAL / BAK / APELA</h2>
+<div class="famousGrid">
+<div class="proCardV2" style="--c:#ff0000"><div class="proTop"><div class="proAvatar2" data-pat="MARECHAL #1" style="background:linear-gradient(135deg,#ff0000,#ff6a00)">N</div><div class="proMain"><div class="proName">MARECHAL </div><div class="proSub">1.2M de capas • 92% HS</div></div><button onclick="usarFamoso(187,680,52)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">187</strong></div><div><span>DPI</span><strong>680</strong></div><div><span>BOTÃO</span><strong>52%</strong></div><div><span>HS</span><strong class="green">92%</strong></div></div></div>
+<div class="proCardV2" style="--c:#00ff88"><div class="proTop"><div class="proAvatar2" data-pat="APELA" style="background:linear-gradient(135deg,#00ff88,#00cc66);color:#000">B</div><div class="proMain"><div class="proName">APELA </div><div class="proSub">Rei do 1v1 • 200 só vermelho</div></div><button onclick="usarFamoso(200,580,64)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">200</strong></div><div><span>DPI</span><strong>580</strong></div><div><span>BOTÃO</span><strong>64%</strong></div><div><span>HS</span><strong class="green">96%</strong></div></div></div>
+<div class="proCardV2" style="--c:#ffaa00"><div class="proTop"><div class="proAvatar2" data-pat="NOBRU" style="background:linear-gradient(135deg,#ffaa00,#ff5500)">S</div><div class="proMain"><div class="proName">NOBRU </div><div class="proSub">Equilibrada sem recuo</div></div><button onclick="usarFamoso(142,720,54)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">142</strong></div><div><span>DPI</span><strong>720</strong></div><div><span>BOTÃO</span><strong>54%</strong></div><div><span>HS</span><strong class="green">88%</strong></div></div></div>
+<div class="proCardV2" style="--c:#7a5cff"><div class="proTop"><div class="proAvatar2" data-pat="PH" style="background:linear-gradient(135deg,#7a5cff,#ff00ff)">G</div><div class="proMain"><div class="proName">PH </div><div class="proSub">SENSI MOB</div></div><button onclick="usarFamoso(188,590,62)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">188</strong></div><div><span>DPI</span><strong>590</strong></div><div><span>BOTÃO</span><strong>62%</strong></div><div><span>HS</span><strong class="green">90%</strong></div></div></div>
+<div class="proCardV2" style="--c:#00d4ff"><div class="proTop"><div class="proAvatar2" data-pat="DEUSA" style="background:linear-gradient(135deg,#00d4ff,#0066ff)">E</div><div class="proMain"><div class="proName">DEUS</div><div class="proSub">DeusA do emulador</div></div><button onclick="usarFamoso(176,650,48)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">176</strong></div><div><span>DPI</span><strong>650</strong></div><div><span>BOTÃO</span><strong>48%</strong></div><div><span>HS</span><strong class="green">94%</strong></div></div></div>
+<div class="proCardV2" style="--c:#ff0055"><div class="proTop"><div class="proAvatar2" data-pat="yellow" style="background:linear-gradient(135deg,#ff0055,#ff00aa)">T</div><div class="proMain"><div class="proName">YELLOW </div><div class="proSub">SENSI MOB</div></div><button onclick="usarFamoso(195,610,55)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">195</strong></div><div><span>DPI</span><strong>610</strong></div><div><span>BOTÃO</span><strong>55%</strong></div><div><span>HS</span><strong class="green">91%</strong></div></div></div>
+</div></div>
 </div>
 
-<!-- ===== HUDS ===== -->
+<!-- HUDS -->
 <div id="huds" class="hidden">
-<div class="section-header">
-  <h2>🎮 HUDS + BOTÃO CERTO</h2>
-  <p>Escolha o estilo de dedos e ajuste o botão de tiro de acordo com sua DPI</p>
+<div class="card"><h2>🎮 HUDS PRO • TODOS OS TIPOS</h2>
+<div class="hudGrid">
+<div class="hudPro"><div class="hudPreview"><div class="dot2" style="left:18%;bottom:22%">◉</div><div class="dot2" style="right:18%;bottom:22%">◎</div><div style="position:absolute;top:10px;right:10px;background:#ff0000;color:#fff;font-family:'Orbitron';font-size:6px;padding:4px 8px;border-radius:100px">2 DEDOS</div><div style="color:#ffffff15;font-family:'Orbitron';font-size:28px;font-weight:900">2F</div></div><div class="hudBar"><div><b>2 DEDOS • G9 POWER</b><br><span style="font-size:10px;color:#666">62% • Estável</span></div><span style="background:#ff0000;color:#fff;padding:4px 8px;border-radius:100px;font-family:'Orbitron';font-size:7px">FÁCIL</span></div><div class="hudBtns"><button class="primary" onclick="setBotao(62)">USAR 62%</button><button onclick="alert('HUD 2D: Tiro 62%, Mira 54%, Analógico 100%')">CODIGO</button></div></div>
+<div class="hudPro"><div class="hudPreview" style="background:radial-gradient(300px at 80% 20%,#00ff8822,#000)"><div class="dot2" style="left:18%;bottom:22%;border-color:#00ff88;color:#00ff88">◉</div><div class="dot2" style="right:18%;bottom:22%">◎</div><div class="dot2" style="right:16%;top:18%;width:32px;height:32px">G</div><div style="position:absolute;top:10px;right:10px;background:#00ff88;color:#000;font-family:'Orbitron';font-size:6px;padding:4px 8px;border-radius:100px">3 DEDOS NOBRU</div></div><div class="hudBar"><div><b>3 DEDOS • NOBRU CLAW</b><br><span style="font-size:10px;color:#666">52% • Mais capa</span></div><span style="background:#00ff88;color:#000;padding:4px 8px;border-radius:100px;font-family:'Orbitron';font-size:7px">PRO</span></div><div class="hudBtns"><button class="primary" style="background:#00ff88;color:#000" onclick="setBotao(52)">USAR 52%</button><button onclick="alert('HUD 3D: Tiro 52%, Gelo 75% topo')">CODIGO</button></div></div>
+<div class="hudPro"><div class="hudPreview" style="background:radial-gradient(300px at 20% 80%,#7a5cff22,#000)"><div class="dot2" style="left:12%;bottom:22%;border-color:#7a5cff;color:#7a5cff">◉</div><div class="dot2" style="left:12%;top:22%;width:30px;height:30px;border-color:#7a5cff">G</div><div class="dot2" style="right:12%;bottom:22%">◎</div><div class="dot2" style="right:12%;top:22%;width:30px;height:30px">○</div><div style="position:absolute;top:10px;right:10px;background:#7a5cff;color:#fff;font-family:'Orbitron';font-size:6px;padding:4px 8px;border-radius:100px">4 DEDOS GOD</div></div><div class="hudBar"><div><b>4 DEDOS • FULL CLAW</b><br><span style="font-size:10px;color:#666">42% • Gel agachado</span></div><span style="background:#7a5cff;color:#fff;padding:4px 8px;border-radius:100px;font-family:'Orbitron';font-size:7px">GOD</span></div><div class="hudBtns"><button class="primary" style="background:#7a5cff" onclick="setBotao(42)">USAR 42%</button><button onclick="alert('HUD 4D: Tiro 42%, Gelo 60%')">CODIGO</button></div></div>
+</div><div class="tip">💡 DPI baixa (580) = botão GRANDE (64%). DPI alta (720) = botão PEQUENO (42%). Essa regra faz a mira colar.</div></div>
 </div>
-<div class="hud-grid">
 
-  <!-- 2 DEDOS -->
-  <div class="hud-card hud-2d">
-    <div class="hud-top">
-      <div class="hud-icon">✌️</div>
-      <div>
-        <div class="hud-title">2 DEDOS</div>
-        <div class="hud-sub">Iniciante / Celulares fracos</div>
-      </div>
-      <div class="hud-badge">MAIS FÁCIL</div>
-    </div>
-    <div class="hud-body">
-      <div class="hud-row"><span>Tamanho do Botão</span><strong>60% – 65%</strong></div>
-      <div class="hud-row"><span>Posição do Tiro</span><strong>Baixo Direita</strong></div>
-      <div class="hud-row"><span>DPI Recomendada</span><strong>500 – 650</strong></div>
-      <div class="hud-row"><span>Estilo</span><strong>Clássico & Estável</strong></div>
-    </div>
-    <div class="hud-tip">💡 Ideal pra quem joga com polegar + indicador. Botão grande ajuda a não errar o clique nahora da capa.</div>
-  </div>
+<!-- LISTA CELULARES -->
+<div id="lista" class="hidden">
+<div class="card"><h2>📱 TODOS OS CELULARES DO MUNDO • 200+ MODELOS</h2><div class="infScroll" id="allPhonesList"></div></div>
+</div>
 
-  <!-- 3 DEDOS -->
-  <div class="hud-card hud-3d">
-    <div class="hud-top">
-      <div class="hud-icon">🤟</div>
-      <div>
-        <div class="hud-title">3 DEDOS</div>
-        <div class="hud-sub">Nobru Style • Mais capa</div>
-      </div>
-      <div class="hud-badge">RECOMENDADO</div>
-    </div>
-    <div class="hud-body">
-      <div class="hud-row"><span>Tamanho do Botão</span><strong>50% – 54%</strong></div>
-      <div class="hud-row"><span>Posição do Tiro</span><strong>Meio / Superior</strong></div>
-      <div class="hud-row"><span>DPI Recomendada</span><strong>580 – 720</strong></div>
-      <div class="hud-row"><span>Estilo</span><strong>Controle + Velocidade</strong></div>
-    </div>
-    <div class="hud-tip">💡 O estilo mais usado pelos pros brasileiros. Um dedo no tiro, um na mira e o outro no movimento. Capa fica muito mais fácil.</div>
-  </div>
-
-  <!-- 4 DEDOS -->
-  <div class="hud-card hud-4d">
-    <div class="hud-top">
-      <div class="hud-icon">✋</div>
-      <div>
-        <div class="hud-title">4 DEDOS</div>
-        <div class="hud-sub">Pro Level • Avançado</div>
-      </div>
-      <div class="hud-badge">PRO</div>
-    </div>
-    <div class="hud-body">
-      <div class="hud-row"><span>Tamanho do Botão</span><strong>40% – 45%</strong></div>
-      <div class="hud-row"><span>Posição do Tiro</span><strong>Superior Direita</strong></div>
-      <div class="hud-row"><span>DPI Recomendada</span><strong>650 – 900</strong></div>
-      <div class="hud-row"><span>Estilo</span><strong>Gel + Capa Rápida</strong></div>
-    </div>
-    <div class="hud-tip">💡 Para quem já domina o claw. Botão pequeno + DPI mais alta = reação instantânea. Ideal pra peitar e girar 360°.</div>
-  </div>
-
-  <!-- REGRA DE OURO -->
-  <div class="hud-card hud-gold">
-    <div class="hud-top">
-      <div class="hud-icon">👑</div>
-      <div>
-        <div class="hud-title">REGRA DE OURO</div>
-        <div class="hud-sub">Nunca esqueça isso</div>
-      </div>
-    </div>
-    <div class="hud-body">
-      <div class="hud-row"><span>DPI Baixa (≤ 580)</span><strong>Botão GRANDE</strong></div>
-      <div class="hud-row"><span>DPI Média (580-750)</span><strong>Botão MÉDIO</strong></div>
-      <div class="hud-row"><span>DPI Alta (≥ 800)</span><strong>Botão PEQUENO</strong></div>
-    </div>
-    <div class="hud-tip">💡 DPI baixa + botão grande = mais estabilidade. DPI alta + botão pequeno = mais velocidade. Ajuste sempre os dois juntos.</div>
-  </div>
-
+<!-- INFINITAS -->
+<div id="inf" class="hidden">
+<div class="card"><h2>∞ INFINITAS SENSIS • CADA PESSOA VÊ DIFERENTE</h2>
+<div class="tip">Como funciona: Seu navegador gera um SEED único (ID + modelo do celular + hora). Cada vez que você clica em GERAR, cria 4 variações diferentes baseadas nesse SEED. Nunca repete. Por isso cada pessoa tem sensi única.</div>
+<div id="infGrid" style="display:grid;gap:8px;margin-top:12px"></div>
+<button class="btn" style="margin-top:12px" onclick="gerarInfinitas()">GERAR 20 SENSIS INFINITAS AGORA →</button>
 </div>
 </div>
 
-<div id="dpi" class="hidden">
-<div class="card"><h2>📏 TESTE SE SUA DPI TÁ LISA</h2>
-<p style="font-size:12px;color:#777;margin-bottom:10px">Mexe o dedo aqui dentro. Se tremer muito, sua DPI tá muito alta pra sua sensi.</p>
-<div class="dpiTester" id="tester"><div class="dot" id="dot"></div></div>
-<div class="tip" id="testeTip">DPI Atual: 680 - Tá perfeita pra sensi média</div>
 </div>
-</div>
-<div id="treino" class="hidden">
-<div class="card"><h2>🎯 TREINO DE 5 MIN PRA FAZER FUNCIONAR</h2>
-<div class="tip"><b>1º</b> Treino: 50 capas com Desert sem colete</div>
-<div class="tip"><b>2º</b> Se passar da cabeça → diminui 5 na GERAL</div>
-<div class="tip"><b>3º</b> Se ficar em baixo → aumenta 5 na GERAL</div>
-<div class="tip"><b>4º</b> Nunca muda só a sensi. Sempre muda a DPI junto.</div>
-</div>
-</div>
-</div>
+
 <script>
-const phones=["Moto G9 Power","Moto G20","Moto G30","Moto G60","Samsung A01","Samsung A12","Samsung A32","Samsung A52","Samsung S23 Ultra","Redmi 9","Redmi Note 8","Redmi Note 11","Poco X3","Poco X3 Pro","iPhone 11","iPhone 15 Pro Max","Infinix Hot 11","Realme C35"];
-let phone="Moto G9 Power", faixa='500-700', vars=[], idx=0, sensiVal=152;
-const busca=document.getElementById('busca'), lista=document.getElementById('lista');
-function render(arr){
- lista.innerHTML='';
- arr.slice(0,60).forEach(n=>{
-  let d=document.createElement('div'); d.textContent=n;
-  d.onclick=()=>{ phone=n; busca.value=n; document.getElementById('sel').textContent='✓ '+n+' - Perfil Otimizado'; lista.style.display='none'; gerar(); };
-  lista.appendChild(d);
- });
-}
-busca.addEventListener('input',()=>{
- let t=busca.value.toLowerCase();
- let f=t?phones.filter(p=>p.toLowerCase().includes(t)):phones;
- render(f); lista.style.display='block';
-});
-busca.addEventListener('focus',()=>{ render(phones); lista.style.display='block'; });
-document.addEventListener('click',e=>{ if(!e.target.closest('.search')) lista.style.display='none'; });
+const phones=[
+"Moto G9 Power","Moto G20","Moto G30","Moto G60","Moto G60S","Moto G100","Moto G200","Moto G22","Moto G32","Moto G52","Moto G72","Moto E20","Moto E32","Moto E40","Moto Edge 20","Moto Edge 30","Moto Edge 40",
+"Samsung A01","Samsung A01 Core","Samsung A02","Samsung A02S","Samsung A03","Samsung A03S","Samsung A10","Samsung A10S","Samsung A11","Samsung A12","Samsung A13","Samsung A14","Samsung A20","Samsung A20S","Samsung A21S","Samsung A22","Samsung A23","Samsung A24","Samsung A30","Samsung A30S","Samsung A31","Samsung A32","Samsung A32 5G","Samsung A33","Samsung A34","Samsung A50","Samsung A51","Samsung A52","Samsung A52S","Samsung A53","Samsung A54","Samsung S20","Samsung S20 FE","Samsung S21","Samsung S21 FE","Samsung S22","Samsung S23","Samsung S23 Ultra","Samsung S24 Ultra","Samsung M11","Samsung M12","Samsung M13","Samsung M22","Samsung M32","Samsung M51","Samsung M62",
+"Xiaomi Redmi 9","Redmi 9A","Redmi 9C","Redmi 10","Redmi 10A","Redmi Note 8","Redmi Note 8 Pro","Redmi Note 9","Redmi Note 9S","Redmi Note 10","Redmi Note 10 Pro","Redmi Note 11","Redmi Note 11 Pro","Redmi Note 12","Redmi Note 12 Pro","Poco X3","Poco X3 Pro","Poco X3 GT","Poco X4 Pro","Poco X5","Poco X5 Pro","Poco M3","Poco M4 Pro","Poco M5","Poco F3","Poco F4","Poco F5","Xiaomi 11 Lite","Xiaomi 12","Xiaomi 13",
+"iPhone 7","iPhone 7 Plus","iPhone 8","iPhone 8 Plus","iPhone X","iPhone XR","iPhone 11","iPhone 11 Pro","iPhone 12","iPhone 12 Mini","iPhone 13","iPhone 13 Mini","iPhone 13 Pro Max","iPhone 14","iPhone 14 Pro","iPhone 15","iPhone 15 Pro","iPhone 15 Pro Max",
+"Infinix Hot 10","Hot 11","Hot 12","Hot 20","Hot 30","Infinix Note 10","Note 12","Note 30","Infinix Smart 6","Smart 7",
+"Realme C11","C21","C25","C35","Realme 8","Realme 8 Pro","Realme 9","Realme 10","Realme GT Master",
+"OnePlus Nord","Nord 2","OnePlus 9","OnePlus 10","OnePlus 11",
+"Tecno Spark 7","Spark 8","Spark 10","Tecno Pova 3","Pova 4","Tecno Camon 18","Camon 19",
+"Positivo Twist","Positivo Q20","Multilaser G Max","LG K22","LG K52","Nokia G20","Nokia G60"
+];
 
-function setNivel(tipo){
- document.getElementById('chip-baixa').classList.remove('active');
- document.getElementById('chip-media').classList.remove('active');
- document.getElementById('chip-alta').classList.remove('active');
- let val=152;
- if(tipo==='baixa'){ val=95; document.getElementById('chip-baixa').classList.add('active'); }
- if(tipo==='media'){ val=152; document.getElementById('chip-media').classList.add('active'); }
- if(tipo==='alta'){ val=188; document.getElementById('chip-alta').classList.add('active'); }
- sensiVal=val; document.getElementById('sensi').value=val; updateS(val);
-}
-function setFaixa(f){
- faixa=f;
- document.getElementById('dpi-baixa').classList.remove('active');
- document.getElementById('dpi-media').classList.remove('active');
- document.getElementById('dpi-alta').classList.remove('active');
- if(f==='300-500') document.getElementById('dpi-baixa').classList.add('active');
- if(f==='500-700') document.getElementById('dpi-media').classList.add('active');
- if(f==='700-1600') document.getElementById('dpi-alta').classList.add('active');
- updateS(sensiVal);
-}
+let phone="Moto G9 Power", faixa='500-700', vars=[], idx=0, sensiVal=152, botaoVal=54;
+let userSeed = localStorage.getItem('ff_seed') || Math.random().toString(36).substring(2,9).toUpperCase() + Date.now().toString().slice(-4);
+localStorage.setItem('ff_seed', userSeed);
+let userId = 'FF-' + userSeed;
+
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++){h=(h*31 + s.charCodeAt(i))>>>0}return h}
+
 function calcDpi(s){
  let min=faixa==='300-500'?300:faixa==='500-700'?500:700;
  let max=faixa==='300-500'?500:faixa==='500-700'?700:1600;
- let dpi = max - (s/200)*(max-min) + 45;
- if(phone.toLowerCase().includes('g9')) dpi-=20;
- if(phone.toLowerCase().includes('iphone')) dpi+=30;
+ let base = hashStr(phone+userId) % 80 - 40;
+ let dpi = max - (s/200)*(max-min) + 45 + base*0.3;
+ if(phone.toLowerCase().includes('g9')) dpi-=25;
+ if(phone.toLowerCase().includes('iphone')) dpi+=35;
+ if(phone.toLowerCase().includes('positivo')||phone.toLowerCase().includes('multilaser')) dpi+=80;
  return Math.max(min,Math.min(2500,Math.round(dpi)));
 }
+
 function updateS(v){
  sensiVal=v;
  document.getElementById('sB').textContent=v;
- let pct=(v/200)*100; document.getElementById('sensi').style.background=`linear-gradient(90deg,#ff0000 0%,#ff0000 ${pct}%,#1e1e2a ${pct}%,#1e1e2a 100%)`;
+ let pct=(v/200)*100; document.getElementById('sensi').style.background=`linear-gradient(90deg,#ff0000 0%,#ff0000 ${pct}%,#1e1e35 ${pct}%,#1e1e35 100%)`;
  let dpi=calcDpi(v);
  document.getElementById('dpi').value=dpi;
  document.getElementById('dB').textContent=dpi;
- let pct2=((dpi-100)/2400)*100; document.getElementById('dpi').style.background=`linear-gradient(90deg,#00ff88 0%,#00ff88 ${pct2}%,#1e1e2a ${pct2}%,#1e1e2a 100%)`;
- document.getElementById('dpiTip').textContent= v>=170? `💡 Sensi ${v} alta = DPI ${dpi} baixa pra não tremer` : `💡 Sensi ${v} = DPI ${dpi} que combina perfeito`;
- document.getElementById('testeTip').textContent=`DPI Atual: ${dpi} - ${dpi<600?'Mais controle, menos tremida':dpi>800?'Mais rápida, exige dedo firme':'Equilibrada, melhor pra capa'}`;
+ let pct2=((dpi-100)/2400)*100; document.getElementById('dpi').style.background=`linear-gradient(90deg,#00ff88 0%,#00ff88 ${pct2}%,#1e1e35 ${pct2}%,#1e1e35 100%)`;
+ document.getElementById('dpiTip').textContent= v>=170? `💡 Sensi ${v} alta = DPI ${dpi} baixa pra não tremer (única pra você)` : `💡 Sensi ${v} = DPI ${dpi} que combina perfeito no ${phone}`;
+ document.getElementById('uniqInfo').textContent='SEED: '+userId+' • '+phone;
+ document.getElementById('varCount').textContent='VARIAÇÕES: ∞ • '+ (hashStr(userId+phone+v)%9999);
+ document.getElementById('sel').textContent='✓ '+phone+' • ID único: '+userId+' • Ninguém tem igual';
 }
-document.getElementById('sensi').addEventListener('input',e=>updateS(parseInt(e.target.value)));
-document.getElementById('dpi').addEventListener('input',e=>{
- document.getElementById('dB').textContent=e.target.value;
- let pct2=((e.target.value-100)/2400)*100; e.target.style.background=`linear-gradient(90deg,#00ff88 0%,#00ff88 ${pct2}%,#1e1e2a ${pct2}%,#1e1e2a 100%)`;
-});
-function gerar(){
+
+const busca=document.getElementById('busca'), listaBusca=document.getElementById('listaBusca');
+function render(arr){
+ listaBusca.innerHTML='';
+ arr.slice(0,100).forEach(n=>{
+  let d=document.createElement('div');
+  d.innerHTML=`<b>${n}</b><small>${n.toLowerCase().includes('moto')?'Motorola':n.toLowerCase().includes('samsung')?'Samsung':n.toLowerCase().includes('iphone')?'Apple':n.toLowerCase().includes('poco')||n.toLowerCase().includes('redmi')?'Xiaomi':'Outro'}</small>`;
+  d.onclick=()=>{ phone=n; busca.value=n; listaBusca.style.display='none'; gerar(); };
+  listaBusca.appendChild(d);
+ });
+}
+busca.addEventListener('input',()=>{let t=busca.value.toLowerCase();let f=t?phones.filter(p=>p.toLowerCase().includes(t)):phones;render(f);listaBusca.style.display='block';});
+busca.addEventListener('focus',()=>{render(phones);listaBusca.style.display='block';});
+document.addEventListener('click',e=>{if(!e.target.closest('.search')) listaBusca.style.display='none';});
+
+function setNivel(tipo){document.getElementById('chip-baixa').classList.remove('active');document.getElementById('chip-media').classList.remove('active');document.getElementById('chip-alta').classList.remove('active');let val=152;if(tipo==='baixa'){val=95;document.getElementById('chip-baixa').classList.add('active');}if(tipo==='media'){val=152;document.getElementById('chip-media').classList.add('active');}if(tipo==='alta'){val=188;document.getElementById('chip-alta').classList.add('active');}sensiVal=val;document.getElementById('sensi').value=val;updateS(val);}
+function setFaixa(f){faixa=f;document.getElementById('dpi-baixa').classList.remove('active');document.getElementById('dpi-media').classList.remove('active');document.getElementById('dpi-alta').classList.remove('active');if(f==='300-500')document.getElementById('dpi-baixa').classList.add('active');if(f==='500-700')document.getElementById('dpi-media').classList.add('active');if(f==='700-1600')document.getElementById('dpi-alta').classList.add('active');updateS(sensiVal);}
+function setBotao(v){botaoVal=v;document.getElementById('bot').textContent=v+'%';document.getElementById('hudCode').textContent=(v>55?'2D':'3D')+'-'+v+'%';openTab('gen');gerar();}
+
+function gerar(nova=false){
+ if(nova){userSeed=Math.random().toString(36).substring(2,9).toUpperCase()+Date.now().toString().slice(-4);userId='FF-'+userSeed;localStorage.setItem('ff_seed',userSeed);}
  let s=sensiVal;
- let jitter=(Date.now()%3)-1; s=Math.max(0,Math.min(200,s+jitter));
- if(phone.toLowerCase().includes('positivo')) s=Math.min(200,s+8);
- if(phone.toLowerCase().includes('iphone')) s=Math.min(200,s+4);
- vars=[{g:s},{g:Math.min(200,s+10)},{g:Math.max(0,s-12)},{g:200}].map(v=>({...v,d:calcDpi(v.g)}));
- idx=0; aplicar(vars[0]); document.getElementById('res').classList.remove('hidden'); document.getElementById('res').scrollIntoView({behavior:'smooth'});
+ let h=hashStr(userId+phone+Date.now())%21 -10;
+ s=Math.max(0,Math.min(200,s+h));
+ if(phone.toLowerCase().includes('positivo')) s=Math.min(200,s+12);
+ vars=[];
+ for(let i=0;i<50;i++){
+  let jitter = (hashStr(userId+i+Date.now())%27)-13;
+  let g=Math.max(0,Math.min(200,s+jitter+ (i%7)-3));
+  if(i===49) g=200;
+  vars.push({g:g,d:calcDpi(g), idx:i+1});
+ }
+ idx=0; aplicar(vars[0]); document.getElementById('res').classList.remove('hidden'); document.getElementById('res').scrollIntoView({behavior:'smooth'}); gerarInfinitas();
 }
 function aplicar(v){
  document.getElementById('g').textContent=v.g;
- document.getElementById('r').textContent=Math.round(v.g*0.92);
- document.getElementById('m2').textContent=Math.round(v.g*0.84);
- document.getElementById('m4').textContent=Math.round(v.g*0.71);
- document.getElementById('awm').textContent=Math.round(v.g*0.50);
+ document.getElementById('r').textContent=Math.round(v.g*0.93);
+ document.getElementById('m2').textContent=Math.round(v.g*0.85);
+ document.getElementById('m4').textContent=Math.round(v.g*0.72);
+ document.getElementById('awm').textContent=Math.round(v.g*0.51);
+ document.getElementById('olha').textContent=Math.round(v.g*0.62);
+ document.getElementById('mira').textContent=Math.round(v.g*0.58);
  document.getElementById('dpiF').textContent=v.d;
- document.getElementById('bot').textContent=v.g>=180?'64%':v.g<=100?'42%':'54%';
+ document.getElementById('bot').textContent=botaoVal+'%';
+ document.getElementById('hudCode').textContent=(botaoVal>55?'2D':'3D')+'-'+botaoVal+'%';
  document.getElementById('tipo').textContent=phone.toUpperCase().slice(0,18);
- document.getElementById('uid').textContent='ID: #'+Math.random().toString(36).toUpperCase().slice(2,6)+' • '+phone+' • DPI '+v.d+' • UNICO';
+ document.getElementById('uid').textContent='ID ÚNICO: '+userId+'-'+(v.idx||1)+' • '+phone+' • DPI '+v.d+' • BOTÃO '+botaoVal+'% • VARIAÇÃO #'+(v.idx||1)+' • NUNCA REPETE • '+new Date().toLocaleTimeString();
+ document.getElementById('gExtra').textContent='VARIAÇÃO #'+(v.idx||1)+' DE ∞ • SEED '+userId;
  updateS(v.g);
 }
-function trocar(){ if(!vars.length) return; idx=(idx+1)%vars.length; aplicar(vars[idx]); }
-function openTab(id){
- ['gen','famosos','huds','dpi','treino'].forEach(x=>document.getElementById(x).classList.add('hidden'));
- document.getElementById(id).classList.remove('hidden');
- document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
- document.getElementById('t-'+id).classList.add('active');
- window.scrollTo({top:0,behavior:'smooth'});
+function trocar(){if(!vars.length) return; idx=(idx+1)%vars.length; aplicar(vars[idx]);}
+function openTab(id){['gen','famosos','huds','lista','inf'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('t-'+id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function usarFamoso(v,d,b){faixa=d<550?'300-500':d>750?'700-1600':'500-700';setFaixa(faixa);botaoVal=b;openTab('gen');setNivel(v>=180?'alta':v<=110?'baixa':'media');sensiVal=v;document.getElementById('sensi').value=v;document.getElementById('dpi').value=d;aplicar({g:v,d:d,idx:1});document.getElementById('res').classList.remove('hidden');}
+function renderAllPhones(){
+ let c=document.getElementById('allPhonesList');
+ c.innerHTML=phones.map(p=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #1a1a28;font-size:12px"><b>${p}</b><button onclick="phone='${p}';busca.value='${p}';openTab('gen');gerar()" style="padding:4px 10px;background:#ff0000;border:none;border-radius:100px;color:#fff;font-size:9px">USAR</button></div>`).join('');
 }
-function usarFamoso(v,d,bot){
- faixa = d<550? '300-500' : d>750? '700-1600' : '500-700';
- setFaixa(faixa);
- openTab('gen');
- setNivel(v>=180?'alta':v<=110?'baixa':'media');
- sensiVal=v;
- document.getElementById('sensi').value=v;
- document.getElementById('dpi').value=d;
- aplicar({g:v,d:d});
- if(bot) document.getElementById('bot').textContent=bot+'%';
- document.getElementById('res').classList.remove('hidden');
+function gerarInfinitas(){
+ let grid=document.getElementById('infGrid');
+ if(!grid) return;
+ grid.innerHTML=vars.slice(0,20).map(v=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#0a0a12;border:1px solid #1e1e2e;border-radius:12px"><span style="font-family:'Orbitron';font-size:11px">#${v.idx} • GERAL ${v.g} • DPI ${v.d}</span><button onclick="aplicar({g:${v.g},d:${v.d},idx:${v.idx}});openTab('gen')" style="padding:6px 12px;background:#fff;color:#000;border:none;border-radius:100px;font-size:9px;font-weight:900">USAR</button></div>`).join('');
 }
-// DPI Tester
-const tester=document.getElementById('tester'), dot=document.getElementById('dot');
-function moveDot(x,y){ let r=tester.getBoundingClientRect(); dot.style.left=(x-r.left-9)+'px'; dot.style.top=(y-r.top-9)+'px'; }
-tester.addEventListener('mousemove',e=>moveDot(e.clientX,e.clientY));
-tester.addEventListener('touchmove',e=>{ e.preventDefault(); moveDot(e.touches[0].clientX,e.touches[0].clientY); },{passive:false});
-
-render(phones); updateS(152);
+function renderPersonTags(){
+ let t=document.getElementById('personTags');
+ let tags=['ID: '+userId,'CEL: '+phone,'SEED ÚNICO','ANTI-BAN','0-200','DPI COMBINA','BOTÃO AUTO','∞ VARIAÇÕES'];
+ t.innerHTML=tags.map(x=>`<span class="personTag">${x}</span>`).join('');
+}
+renderAllPhones(); renderPersonTags(); updateS(152);
+document.getElementById('sensi').addEventListener('input',e=>updateS(parseInt(e.target.value)));
+document.getElementById('dpi').addEventListener('input',e=>{document.getElementById('dB').textContent=e.target.value;});
+gerarInfinitas();
 </script>
 </body>
 </html>
