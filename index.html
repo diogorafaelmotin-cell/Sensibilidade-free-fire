@@ -1,286 +1,1057 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SENSIBILIDADE DGSENSI- VIPS</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@600;700;800;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}body{background:#06060a;color:#fff;font-family:'Inter';min-height:100vh}
-.bg{position:fixed;inset:0;background:radial-gradient(900px at 10% -10%,#ff000022,transparent),radial-gradient(700px at 100% 100%,#ff6a0022,transparent),linear-gradient(#06060a,#06060a)}
-.top{padding:18px 14px;text-align:center;position:sticky;top:0;z-index:999;background:rgba(6,6,10,0.92);backdrop-filter:blur(25px);border-bottom:2px solid #1a1a22}
-.top h1{font-family:'Orbitron';font-size:30px;letter-spacing:2px}.top h1 span{background:linear-gradient(90deg,#ff0000 0%,#ff8800 50%,#ffcc00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.top p{font-family:'Orbitron';font-size:7.5px;letter-spacing:3px;color:#555;margin-top:5px}
-.tabs{display:flex;gap:7px;padding:12px;overflow-x:auto;background:#0a0a10;border-bottom:1px solid #1a1a28;position:sticky;top:66px;z-index:998;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
-.tabs button{padding:12px 16px;border-radius:100px;border:1px solid #222235;background:#12121e;color:#666;font-family:'Orbitron';font-size:8.5px;white-space:nowrap;cursor:pointer;transition:.2s;flex-shrink:0}.tabs button.active{background:linear-gradient(90deg,#ff0000,#ff5500);color:#fff;border-color:#ff0000;box-shadow:0 0 22px #ff000066;transform:scale(1.06)}
-.wrap{max-width:780px;margin:auto;padding:12px;position:relative;z-index:10}
-.card{background:linear-gradient(180deg,#171722 0%,#0f0f18 100%);border:1px solid #23233a;border-radius:24px;padding:18px;margin-bottom:12px;box-shadow:0 10px 40px #0008}
-.card h2{font-family:'Orbitron';font-size:10px;color:#ff3333;letter-spacing:2px;margin-bottom:12px}
-.search{position:relative}.search input{width:100%;padding:16px 50px 16px 16px;background:#07070d;border:2px solid #252540;border-radius:16px;color:#fff;font-size:15px;outline:none}.search input:focus{border-color:#ff0000}
-.ico{position:absolute;right:6px;top:6px;width:42px;height:42px;background:linear-gradient(135deg,#ff0000,#ff8800);border-radius:12px;display:grid;place-items:center}
-.list{position:absolute;top:64px;left:0;right:0;background:#10101a;border:1px solid #2a2a44;border-radius:16px;max-height:320px;overflow:auto;display:none;z-index:500}.list div{padding:12px 16px;border-bottom:1px solid #1a1a28;font-size:13px;cursor:pointer;display:flex;justify-content:space-between}.list div:hover{background:#ff0000;color:#fff}.list div small{color:#888}
-.chips{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-.chip{padding:12px 6px;background:#0a0a12;border:2px solid #1d1d32;border-radius:14px;text-align:center;font-size:9.5px;cursor:pointer;color:#666;transition:.15s}.chip b{font-family:'Orbitron';display:block;font-size:10px;color:#fff;margin-bottom:2px}.chip.active{border-color:#ff0000;background:linear-gradient(180deg,#1f0000,#1a0000);color:#ff7777;box-shadow:0 0 18px #ff000022}
-.sliderWrap{background:#08080f;border:1px solid #1c1c30;border-radius:18px;padding:16px;margin-top:10px}
-.sliderRow{display:flex;align-items:center;gap:12px}
-input[type=range]{-webkit-appearance:none;flex:1;height:8px;border-radius:100px;background:#1e1e35;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;background:#fff;border:4px solid #ff0000;border-radius:50%;box-shadow:0 0 14px #ff0000aa;margin-top:-9px}
-.badge{min-width:74px;padding:10px;border-radius:12px;font-family:'Orbitron';font-weight:900;text-align:center;font-size:16px;background:linear-gradient(90deg,#ff0000,#ff6a00);box-shadow:0 6px 18px #ff000044}
-.badge.green{background:linear-gradient(90deg,#00ff88,#00d4aa);color:#000}
-.btn{width:100%;padding:18px;background:linear-gradient(90deg,#ff0000,#ff5500 55%,#ffaa00);border:none;border-radius:18px;color:#fff;font-family:'Orbitron';font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 14px 35px #ff000055;position:relative;overflow:hidden}
-.btn::after{content:'∞';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:22px;opacity:.5}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.box{background:#000;border:1px solid #1e1e32;border-radius:16px;padding:14px;text-align:center}
-.box.main{grid-column:span 2;padding:22px;background:radial-gradient(700px at 50% 0%,#2a0000,#000);border-color:#ff000055;cursor:pointer;position:relative;overflow:hidden}
-.box.main::after{content:'CLIQUE PARA INFINITA →';position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-family:'Orbitron';font-size:7px;color:#ff0000;letter-spacing:2px}
-.box span{font-family:'Orbitron';font-size:7px;color:#555;letter-spacing:1px}
-.box strong{font-family:'Orbitron';font-size:19px;display:block;margin-top:4px}
-.box.main strong{font-size:52px;background:linear-gradient(90deg,#fff,#ff6666,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-.box.green{border-color:#00ff8844;background:linear-gradient(180deg,#001a10,#000)} .box.green strong{color:#00ff88}
-.box.blue{border-color:#0088ff44;background:linear-gradient(180deg,#001a2a,#000)} .box.blue strong{color:#00aaff}
-.tag{width:100%;background:#00ff8811;border:1px dashed #00ff8844;color:#00ff88;padding:9px;border-radius:100px;text-align:center;font-family:'Orbitron';font-size:7.5px;margin-top:10px;letter-spacing:1px;word-break:break-all}
-.hidden{display:none!important}
-.famousGrid{display:grid;gap:10px}
-.proCardV2{background:linear-gradient(135deg,#1d1d2a,#11111a);border:1px solid #2a2a40;border-radius:20px;overflow:hidden;position:relative}
-.proCardV2::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c)}
-.proTop{display:flex;align-items:center;gap:12px;padding:14px}
-.proAvatar2{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-family:'Orbitron';font-weight:900;color:#fff;flex-shrink:0;position:relative}
-.proAvatar2::after{content:attr(data-pat);position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:#000;border:1px solid var(--c);color:var(--c);font-size:6px;padding:2px 6px;border-radius:100px;white-space:nowrap}
-.proMain{flex:1}.proName{font-family:'Orbitron';font-size:12px;display:flex;gap:6px;align-items:center}.proName i{font-style:normal;background:var(--c);color:#000;font-size:6.5px;padding:2px 6px;border-radius:100px;font-weight:900}.proSub{font-size:10px;color:#777;margin-top:2px}
-.proCardV2 button{position:absolute;right:10px;top:14px;padding:8px 14px;background:#fff;color:#000;border:none;border-radius:100px;font-family:'Orbitron';font-size:8.5px;font-weight:900}
-.proStats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;background:#0006;border-top:1px solid #1e1e2e;padding:10px 14px}.proStats div{text-align:center}.proStats span{font-family:'Orbitron';font-size:6.5px;color:#555;display:block}.proStats strong{font-family:'Orbitron';font-size:11px;display:block}.proStats strong.green{color:#00ff88}.proStats strong.red{color:#ff4444}
-.hudGrid{display:grid;gap:10px}
-.hudPro{background:linear-gradient(180deg,#16161f,#0d0d14);border:1px solid #222235;border-radius:20px;overflow:hidden}
-.hudPreview{height:150px;background:#000;display:grid;place-items:center;position:relative}
-.dot2{position:absolute;width:38px;height:38px;border-radius:50%;border:2px solid #ff0000;background:#ff000022;display:grid;place-items:center;font-size:9px;font-family:'Orbitron';color:#ff0000}
-.hudBar{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:#0008;border-top:1px solid #1a1a2a}
-.hudBtns{display:flex;gap:7px;padding:0 12px 12px}.hudBtns button{flex:1;padding:10px;border-radius:12px;border:1px solid #222;background:#111;color:#fff;font-family:'Orbitron';font-size:8.5px}.hudBtns button.primary{background:#ff0000;border-color:#ff0000}
-.tip{background:#10101a;border-left:3px solid #ff0000;padding:10px 12px;border-radius:10px;margin-top:8px;font-size:11px;color:#aaa;line-height:1.4}
-.infScroll{max-height:420px;overflow:auto}
-.personTag{display:inline-block;background:#1a1a2a;border:1px solid #2a2a44;border-radius:100px;padding:4px 10px;font-size:9px;font-family:'Orbitron';color:#888;margin:3px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>disensi — Gerador de Sensibilidade Free Fire</title>
+  <meta name="description" content="disensi — Gerador profissional de sensibilidade Free Fire com DPI e ciclos. Calibrado para qualquer celular do mundo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --bg-elevated: #121218;
+      --bg-card: #16161e;
+      --bg-input: #1c1c26;
+      --purple: #8b5cf6;
+      --purple-light: #a78bfa;
+      --purple-bright: #c4b5fd;
+      --purple-deep: #6d28d9;
+      --purple-glow: rgba(139, 92, 246, 0.35);
+      --white: #f5f5f7;
+      --white-muted: #a1a1aa;
+      --gray: #71717a;
+      --border: rgba(139, 92, 246, 0.18);
+      --border-strong: rgba(139, 92, 246, 0.4);
+      --success: #34d399;
+      --danger: #f87171;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(109, 40, 217, 0.1), transparent),
+        radial-gradient(ellipse 40% 30% at 0% 80%, rgba(167, 139, 250, 0.06), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+
+    header {
+      text-align: center;
+      padding: 36px 0 28px;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 7vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #e4e4e7 0%, #a1a1aa 25%, #c4b5fd 50%, #8b5cf6 75%, #e4e4e7 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: graphiteShine 6s linear infinite;
+      margin-bottom: 6px;
+    }
+
+    @keyframes graphiteShine {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .tagline {
+      font-size: 0.95rem;
+      color: var(--white-muted);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--purple-light);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--purple);
+      box-shadow: 0 0 8px var(--purple);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 22px 20px;
+      margin-bottom: 16px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.08), 0 12px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .card-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-label::before {
+      content: '';
+      width: 3px;
+      height: 14px;
+      background: linear-gradient(180deg, var(--purple-bright), var(--purple-deep));
+      border-radius: 2px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gray);
+      margin-bottom: 7px;
+    }
+
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 13px 15px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+
+    input[type="text"]::placeholder { color: var(--gray); }
+
+    input[type="text"]:focus,
+    select:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px var(--purple-glow);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a78bfa' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      cursor: pointer;
+    }
+
+    .search-wrap { position: relative; }
+
+    .search-list {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      max-height: 240px;
+      overflow-y: auto;
+      z-index: 60;
+      display: none;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-list.open { display: block; }
+
+    .search-opt {
+      padding: 11px 15px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background 0.15s;
+      color: var(--white);
+    }
+
+    .search-opt:hover { background: rgba(139, 92, 246, 0.12); color: var(--purple-bright); }
+    .search-opt:last-child { border-bottom: none; }
+    .search-opt.custom { color: var(--purple-light); }
+    .search-opt.hint { color: var(--gray); font-size: 0.8rem; pointer-events: none; }
+
+    .style-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .style-opt {
+      background: var(--bg-input);
+      border: 1.5px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 16px 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.22s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .style-opt:hover {
+      border-color: rgba(139, 92, 246, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .style-opt.active {
+      border-color: var(--purple);
+      background: rgba(139, 92, 246, 0.12);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+    }
+
+    .style-opt .s-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    .style-opt .s-desc {
+      font-size: 0.72rem;
+      color: var(--gray);
+    }
+
+    .style-opt.active .s-name { color: var(--purple-bright); }
+
+    .dpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .dpi-opt {
+      background: var(--bg-input);
+      border: 1.5px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--white-muted);
+      transition: all 0.22s;
+    }
+
+    .dpi-opt small {
+      display: block;
+      font-weight: 400;
+      font-size: 0.72rem;
+      opacity: 0.7;
+      margin-top: 3px;
+    }
+
+    .dpi-opt:hover { border-color: rgba(139, 92, 246, 0.3); }
+
+    .dpi-opt.active {
+      border-color: var(--purple);
+      background: rgba(139, 92, 246, 0.12);
+      color: var(--purple-bright);
+      box-shadow: 0 0 16px rgba(139, 92, 246, 0.12);
+    }
+
+    .btn-gen {
+      width: 100%;
+      margin-top: 4px;
+      background: linear-gradient(135deg, var(--purple-deep), var(--purple));
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 24px rgba(139, 92, 246, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gen:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.5);
+    }
+
+    .btn-gen:active { transform: translateY(0); }
+
+    .btn-gen::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+      transform: translateX(-100%);
+      transition: transform 0.5s;
+    }
+
+    .btn-gen:hover::after { transform: translateX(100%); }
+
+    .results { display: none; }
+    .results.show { display: block; animation: fadeUp 0.45s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .results-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .meta-chip {
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid var(--border);
+      color: var(--purple-light);
+    }
+
+    .meta-chip.dpi {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--white-muted);
+    }
+
+    .sensi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (min-width: 520px) {
+      .sensi-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .sensi-cell {
+      background: var(--bg-input);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .sensi-cell:hover {
+      border-color: var(--purple);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.15);
+    }
+
+    .sensi-cell .sc-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+
+    .sensi-cell .sc-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #e4e4e7, var(--purple-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sensi-cell .sc-copy {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: var(--gray);
+      cursor: pointer;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s;
+      padding: 2px;
+    }
+
+    .sensi-cell:hover .sc-copy { opacity: 1; }
+    .sensi-cell .sc-copy:hover { color: var(--success); }
+
+    .act-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-act {
+      flex: 1;
+      min-width: 120px;
+      background: var(--bg-input);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-act:hover {
+      border-color: var(--purple);
+      color: var(--purple-light);
+      background: rgba(139, 92, 246, 0.08);
+    }
+
+    .btn-act.primary {
+      background: rgba(52, 211, 153, 0.1);
+      border-color: rgba(52, 211, 153, 0.3);
+      color: var(--success);
+    }
+
+    .btn-act.primary:hover {
+      background: rgba(52, 211, 153, 0.18);
+    }
+
+    .tips {
+      margin-top: 16px;
+      padding: 14px 16px;
+      background: rgba(139, 92, 246, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .tips h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 8px;
+    }
+
+    .tips ul {
+      list-style: none;
+      font-size: 0.84rem;
+      color: var(--white-muted);
+    }
+
+    .tips li {
+      padding: 3px 0 3px 14px;
+      position: relative;
+    }
+
+    .tips li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--purple);
+    }
+
+    footer {
+      text-align: center;
+      padding: 36px 0 8px;
+      color: var(--gray);
+      font-size: 0.8rem;
+    }
+
+    footer strong {
+      color: var(--white-muted);
+      font-weight: 600;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--success);
+      color: #0b0b0f;
+      padding: 11px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+      box-shadow: 0 8px 28px rgba(52, 211, 153, 0.3);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.err { background: var(--danger); color: #fff; }
+
+    .loader {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 11, 15, 0.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .loader.show { display: flex; }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 2.5px solid rgba(139, 92, 246, 0.2);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-txt {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--purple-light);
+      text-transform: uppercase;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 3px; }
+
+    @media (max-width: 480px) {
+      .style-row { grid-template-columns: 1fr; }
+      .sensi-cell .sc-value { font-size: 1.4rem; }
+      .card { padding: 18px; }
+    }
+  </style>
 </head>
 <body>
-<div class="bg"></div>
-<div class="top"><h1>SENSI <span>FREE FIRE ∞</span></h1><p>XIT • TODOS CELULARES • ÚNICA POR PESSOA • DPI TODOS OS TIPOS</p></div>
-<div class="tabs">
-<button id="t-gen" class="active" onclick="openTab('gen')">⚙️ GERADOR ∞</button>
-<button id="t-famosos" onclick="openTab('famosos')">⭐ FAMOSOS</button>
-<button id="t-huds" onclick="openTab('huds')">🎮 HUDS</button>
-<button id="t-lista" onclick="openTab('lista')">📱 CELULARES</button>
-<button id="t-inf" onclick="openTab('inf')">∞ INFINITAS</button>
-</div>
+  <div class="bg-mesh"></div>
 
-<div class="wrap">
-<!-- GERADOR -->
-<div id="gen">
-<div class="card">
-<h2>🔍 SEU CELULAR - 200+ MODELOS DE CELULARES</h2>
-<div class="search"><input id="busca" placeholder="Digite: G9 Power, A32, iPhone 15, Poco, Infinix..."><div class="ico">⌕</div><div class="list" id="listaBusca"></div></div>
-<div class="tag" id="sel">✓ Moto G9 Power - Perfil Otimizado • ATUALIZAÇÃO PELA FRENTE</div>
-<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap" id="personTags"></div>
-</div>
+  <div class="container">
+    <header>
+      <div class="logo">disensi</div>
+      <p class="tagline">Gerador de Sensibilidade Free Fire</p>
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        500+ modelos &middot; qualquer celular
+      </div>
+    </header>
 
-<div class="card">
-<h2>🎯 SENSIBILIDADE 0-200 • AS MELHORES</h2>
-<div class="chips">
-<div class="chip" id="chip-baixa" onclick="setNivel('baixa')"><b>BAIXA</b>0-110<br>Precisão</div>
-<div class="chip active" id="chip-media" onclick="setNivel('media')"><b>MÉDIA</b>120-165<br>Equilibrada</div>
-<div class="chip" id="chip-alta" onclick="setNivel('alta')"><b>ALTA 200</b>170-200<br>Só Capa</div>
-</div>
-<div class="sliderWrap"><div class="sliderRow"><input type="range" id="sensi" min="0" max="200" value="152"><div class="badge" id="sB">152</div></div><div style="margin-top:8px;display:flex;gap:6px"><span class="personTag" id="uniqInfo">SEED: calculando...</span><span class="personTag" id="varCount">VARIAÇÕES: ∞</span></div></div>
-</div>
+    <div class="card">
+      <div class="card-label">Seu celular</div>
+      <div class="field">
+        <label for="phoneSearch">Modelo (digite qualquer um)</label>
+        <div class="search-wrap">
+          <input type="text" id="phoneSearch" placeholder="Galaxy A15, Redmi Note 13, iPhone 16..." autocomplete="off">
+          <div class="search-list" id="searchList"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label for="tierSelect">Ou escolha a categoria</label>
+        <select id="tierSelect">
+          <option value="">— Selecione a faixa —</option>
+          <option value="entry">Entrada (A05, A14, Infinix Hot...)</option>
+          <option value="basic">Intermediário Básico (A15, Redmi 12, Moto G...)</option>
+          <option value="mid">Intermediário (Note 12/13, Poco X5, A54...)</option>
+          <option value="premium">Premium (iPhone 14/15, S22/S23...)</option>
+          <option value="flagship">Topo de linha (S24 Ultra, iPhone 16 Pro...)</option>
+        </select>
+      </div>
+    </div>
 
-<div class="card">
-<h2>⚡ DPI IDEAL • 360-2500</h2>
-<div class="chips">
-<div class="chip" id="dpi-baixa" onclick="setFaixa('300-500')"><b>300-500</b>Lenta<br>Controle</div>
-<div class="chip active" id="dpi-media" onclick="setFaixa('500-700')"><b>500-700</b>PRO<br>Equilíbrio</div>
-<div class="chip" id="dpi-alta" onclick="setFaixa('700-1600')"><b>700-1600</b>Speed<br>Rápida</div>
-</div>
-<div class="sliderWrap"><div class="sliderRow"><input type="range" id="dpi" min="100" max="2500" value="680"><div class="badge green" id="dB">680</div></div></div>
-<div class="tip" id="dpiTip">💡 Sensi alta + DPI baixa = mira firme. Sensi baixa + DPI alta = compensa. PURO XIT.</div>
-</div>
+    <div class="card">
+      <div class="card-label">Estilo de mira</div>
+      <div class="style-row">
+        <div class="style-opt active" data-style="baixa">
+          <div class="s-name">Baixa</div>
+          <div class="s-desc">Mais controle</div>
+        </div>
+        <div class="style-opt" data-style="padrao">
+          <div class="s-name">Padrão</div>
+          <div class="s-desc">Equilibrada</div>
+        </div>
+        <div class="style-opt" data-style="alta">
+          <div class="s-name">Alta</div>
+          <div class="s-desc">Mais rápida</div>
+        </div>
+      </div>
+    </div>
 
-<button class="btn" onclick="gerar()">GERAR SENSI ÚNICA → VARIAS</button>
+    <div class="card" id="dpiCard">
+      <div class="card-label" id="dpiCardLabel">Nível de DPI</div>
+      <div class="dpi-row" id="dpiRow">
+        <button class="dpi-opt" data-level="baixa">Baixa<small>Mais controle</small></button>
+        <button class="dpi-opt active" data-level="media">Média<small>Equilibrada</small></button>
+        <button class="dpi-opt" data-level="alta">Alta<small>Mais velocidade</small></button>
+      </div>
+      <p id="dpiHint" style="margin-top:12px;font-size:0.78rem;color:var(--gray);line-height:1.4">Android: DPI ajustável nas opções do desenvolvedor. iPhone troca automaticamente para ciclos.</p>
+    </div>
 
-<div class="card hidden" id="res">
-<h2>✅ SUA SENSI É ÚNICA NO MUNDO - NINGUÉM TEM IGUAL</h2>
-<div class="grid2">
-<div class="box main" onclick="trocar()"><span>GERAL 0-200 • CLIQUE PRA GERAR OUTRA SENSI</span><strong id="g">152</strong><div style="font-size:9px;color:#ff0000;margin-top:6px;font-family:'Orbitron'" id="gExtra">VARIAÇÃO #1 • INFINITA</div></div>
-<div class="box"><span>RED DOT</span><strong id="r">142</strong></div>
-<div class="box"><span>2X MIRA</span><strong id="m2">130</strong></div>
-<div class="box"><span>4X MIRA</span><strong id="m4">110</strong></div>
-<div class="box"><span>AWM SNIPER</span><strong id="awm">80</strong></div>
-<div class="box"><span>OLHADINHA</span><strong id="olha">95</strong></div>
-<div class="box"><span>MIRA GG</span><strong id="mira">88</strong></div>
-<div class="box green"><span>DPI QUE COMBINA</span><strong id="dpiF">680</strong></div>
-<div class="box green"><span>BOTÃO TIRO</span><strong id="bot">54%</strong></div>
-<div class="box blue"><span>HUD CODE</span><strong id="hudCode" style="font-size:10px">3D-52%</strong></div>
-<div class="box blue"><span>CELULAR</span><strong id="tipo" style="font-size:9px">G9 POWER</strong></div>
-</div>
-<div class="tag" id="uid">ID ÚNICO GERANDO...</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-<button onclick="trocar()" style="padding:12px;background:#111;border:1px solid #222;border-radius:12px;color:#fff;font-family:'Orbitron';font-size:9px">🔄 OUTRA VARIAÇÃO</button>
-<button onclick="gerar(true)" style="padding:12px;background:#ff0000;border:none;border-radius:12px;color:#fff;font-family:'Orbitron';font-size:9px">🎲 SENSI TOTALMENTE NOVA</button>
-</div>
-</div>
-</div>
+    <button class="btn-gen" id="btnGenerate">Gerar Sensibilidade</button>
 
-<!-- FAMOSOS -->
-<div id="famosos" class="hidden">
-<div class="card"><h2>🔥 SENSI DOS FAMOSOS • MARECHAL / BAK / APELA</h2>
-<div class="famousGrid">
-<div class="proCardV2" style="--c:#ff0000"><div class="proTop"><div class="proAvatar2" data-pat="MARECHAL #1" style="background:linear-gradient(135deg,#ff0000,#ff6a00)">N</div><div class="proMain"><div class="proName">MARECHAL </div><div class="proSub">1.2M de capas • 92% HS</div></div><button onclick="usarFamoso(187,680,52)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">187</strong></div><div><span>DPI</span><strong>680</strong></div><div><span>BOTÃO</span><strong>52%</strong></div><div><span>HS</span><strong class="green">92%</strong></div></div></div>
-<div class="proCardV2" style="--c:#00ff88"><div class="proTop"><div class="proAvatar2" data-pat="APELA" style="background:linear-gradient(135deg,#00ff88,#00cc66);color:#000">B</div><div class="proMain"><div class="proName">APELA </div><div class="proSub">Rei do 1v1 • 200 só vermelho</div></div><button onclick="usarFamoso(200,580,64)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">200</strong></div><div><span>DPI</span><strong>580</strong></div><div><span>BOTÃO</span><strong>64%</strong></div><div><span>HS</span><strong class="green">96%</strong></div></div></div>
-<div class="proCardV2" style="--c:#ffaa00"><div class="proTop"><div class="proAvatar2" data-pat="NOBRU" style="background:linear-gradient(135deg,#ffaa00,#ff5500)">S</div><div class="proMain"><div class="proName">NOBRU </div><div class="proSub">Equilibrada sem recuo</div></div><button onclick="usarFamoso(142,720,54)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">142</strong></div><div><span>DPI</span><strong>720</strong></div><div><span>BOTÃO</span><strong>54%</strong></div><div><span>HS</span><strong class="green">88%</strong></div></div></div>
-<div class="proCardV2" style="--c:#7a5cff"><div class="proTop"><div class="proAvatar2" data-pat="PH" style="background:linear-gradient(135deg,#7a5cff,#ff00ff)">G</div><div class="proMain"><div class="proName">PH </div><div class="proSub">SENSI MOB</div></div><button onclick="usarFamoso(188,590,62)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">188</strong></div><div><span>DPI</span><strong>590</strong></div><div><span>BOTÃO</span><strong>62%</strong></div><div><span>HS</span><strong class="green">90%</strong></div></div></div>
-<div class="proCardV2" style="--c:#00d4ff"><div class="proTop"><div class="proAvatar2" data-pat="DEUSA" style="background:linear-gradient(135deg,#00d4ff,#0066ff)">E</div><div class="proMain"><div class="proName">DEUS</div><div class="proSub">DeusA do emulador</div></div><button onclick="usarFamoso(176,650,48)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">176</strong></div><div><span>DPI</span><strong>650</strong></div><div><span>BOTÃO</span><strong>48%</strong></div><div><span>HS</span><strong class="green">94%</strong></div></div></div>
-<div class="proCardV2" style="--c:#ff0055"><div class="proTop"><div class="proAvatar2" data-pat="yellow" style="background:linear-gradient(135deg,#ff0055,#ff00aa)">T</div><div class="proMain"><div class="proName">YELLOW </div><div class="proSub">SENSI MOB</div></div><button onclick="usarFamoso(195,610,55)">USAR</button></div><div class="proStats"><div><span>GERAL</span><strong class="red">195</strong></div><div><span>DPI</span><strong>610</strong></div><div><span>BOTÃO</span><strong>55%</strong></div><div><span>HS</span><strong class="green">91%</strong></div></div></div>
-</div></div>
-</div>
+    <div class="results" id="results">
+      <div class="card" style="margin-top:20px">
+        <div class="card-label">Sua sensibilidade</div>
+        <div class="results-meta">
+          <div class="meta-chip" id="deviceChip">—</div>
+          <div class="meta-chip dpi" id="dpiChip" style="display:none">DPI —</div>
+        </div>
+        <div class="sensi-grid" id="sensiGrid"></div>
+        <div class="act-row">
+          <button class="btn-act primary" id="btnCopyAll">Copiar tudo</button>
+          <button class="btn-act" id="btnRegen">Nova variação</button>
+          <button class="btn-act" id="btnShare">Compartilhar</button>
+        </div>
+        <div class="tips">
+          <h4>Como aplicar</h4>
+          <ul>
+            <li>Free Fire → Configurações → Sensibilidade</li>
+            <li>Digite os valores em cada campo</li>
+            <li>Android + DPI: Opções do Desenvolvedor</li>
+            <li>iPhone: use os ciclos gerados no arraste da mira</li>
+            <li>Treine 15–20 min no Modo Treino</li>
+            <li>Ajuste ±5 pontos se necessário</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<!-- HUDS -->
-<div id="huds" class="hidden">
-<div class="card"><h2>🎮 HUDS PRO • TODOS OS TIPOS</h2>
-<div class="hudGrid">
-<div class="hudPro"><div class="hudPreview"><div class="dot2" style="left:18%;bottom:22%">◉</div><div class="dot2" style="right:18%;bottom:22%">◎</div><div style="position:absolute;top:10px;right:10px;background:#ff0000;color:#fff;font-family:'Orbitron';font-size:6px;padding:4px 8px;border-radius:100px">2 DEDOS</div><div style="color:#ffffff15;font-family:'Orbitron';font-size:28px;font-weight:900">2F</div></div><div class="hudBar"><div><b>2 DEDOS • G9 POWER</b><br><span style="font-size:10px;color:#666">62% • Estável</span></div><span style="background:#ff0000;color:#fff;padding:4px 8px;border-radius:100px;font-family:'Orbitron';font-size:7px">FÁCIL</span></div><div class="hudBtns"><button class="primary" onclick="setBotao(62)">USAR 62%</button><button onclick="alert('HUD 2D: Tiro 62%, Mira 54%, Analógico 100%')">CODIGO</button></div></div>
-<div class="hudPro"><div class="hudPreview" style="background:radial-gradient(300px at 80% 20%,#00ff8822,#000)"><div class="dot2" style="left:18%;bottom:22%;border-color:#00ff88;color:#00ff88">◉</div><div class="dot2" style="right:18%;bottom:22%">◎</div><div class="dot2" style="right:16%;top:18%;width:32px;height:32px">G</div><div style="position:absolute;top:10px;right:10px;background:#00ff88;color:#000;font-family:'Orbitron';font-size:6px;padding:4px 8px;border-radius:100px">3 DEDOS NOBRU</div></div><div class="hudBar"><div><b>3 DEDOS • NOBRU CLAW</b><br><span style="font-size:10px;color:#666">52% • Mais capa</span></div><span style="background:#00ff88;color:#000;padding:4px 8px;border-radius:100px;font-family:'Orbitron';font-size:7px">PRO</span></div><div class="hudBtns"><button class="primary" style="background:#00ff88;color:#000" onclick="setBotao(52)">USAR 52%</button><button onclick="alert('HUD 3D: Tiro 52%, Gelo 75% topo')">CODIGO</button></div></div>
-<div class="hudPro"><div class="hudPreview" style="background:radial-gradient(300px at 20% 80%,#7a5cff22,#000)"><div class="dot2" style="left:12%;bottom:22%;border-color:#7a5cff;color:#7a5cff">◉</div><div class="dot2" style="left:12%;top:22%;width:30px;height:30px;border-color:#7a5cff">G</div><div class="dot2" style="right:12%;bottom:22%">◎</div><div class="dot2" style="right:12%;top:22%;width:30px;height:30px">○</div><div style="position:absolute;top:10px;right:10px;background:#7a5cff;color:#fff;font-family:'Orbitron';font-size:6px;padding:4px 8px;border-radius:100px">4 DEDOS GOD</div></div><div class="hudBar"><div><b>4 DEDOS • FULL CLAW</b><br><span style="font-size:10px;color:#666">42% • Gel agachado</span></div><span style="background:#7a5cff;color:#fff;padding:4px 8px;border-radius:100px;font-family:'Orbitron';font-size:7px">GOD</span></div><div class="hudBtns"><button class="primary" style="background:#7a5cff" onclick="setBotao(42)">USAR 42%</button><button onclick="alert('HUD 4D: Tiro 42%, Gelo 60%')">CODIGO</button></div></div>
-</div><div class="tip">💡 DPI baixa (580) = botão GRANDE (64%). DPI alta (720) = botão PEQUENO (42%). Essa regra faz a mira colar.</div></div>
-</div>
+    <footer>
+      <p><strong>disensi</strong> — sensibilidade calibrada para Free Fire &amp; Free Fire MAX</p>
+      <p style="margin-top:4px;opacity:0.6">Ajuste fino sempre recomendado após o treino</p>
+    </footer>
+  </div>
 
-<!-- LISTA CELULARES -->
-<div id="lista" class="hidden">
-<div class="card"><h2>📱 TODOS OS CELULARES DO MUNDO • 200+ MODELOS</h2><div class="infScroll" id="allPhonesList"></div></div>
-</div>
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+    <div class="loader-txt">Calculando</div>
+  </div>
 
-<!-- INFINITAS -->
-<div id="inf" class="hidden">
-<div class="card"><h2>∞ INFINITAS SENSIS • CADA PESSOA VÊ DIFERENTE</h2>
-<div class="tip">Como funciona: Seu navegador gera um SEED único (ID + modelo do celular + hora). Cada vez que você clica em GERAR, cria 4 variações diferentes baseadas nesse SEED. Nunca repete. Por isso cada pessoa tem sensi única.</div>
-<div id="infGrid" style="display:grid;gap:8px;margin-top:12px"></div>
-<button class="btn" style="margin-top:12px" onclick="gerarInfinitas()">GERAR 20 SENSIS INFINITAS AGORA →</button>
-</div>
-</div>
+  <div class="toast" id="toast"></div>
 
-</div>
+  <script>
+    const phones = [
+      { name: "Samsung Galaxy A01", tier: "entry" }, { name: "Samsung Galaxy A01 Core", tier: "entry" },
+      { name: "Samsung Galaxy A02", tier: "entry" }, { name: "Samsung Galaxy A02s", tier: "entry" },
+      { name: "Samsung Galaxy A03", tier: "entry" }, { name: "Samsung Galaxy A03s", tier: "entry" }, { name: "Samsung Galaxy A03 Core", tier: "entry" },
+      { name: "Samsung Galaxy A04", tier: "entry" }, { name: "Samsung Galaxy A04s", tier: "entry" }, { name: "Samsung Galaxy A04e", tier: "entry" },
+      { name: "Samsung Galaxy A05", tier: "entry" }, { name: "Samsung Galaxy A05s", tier: "entry" },
+      { name: "Samsung Galaxy A06", tier: "entry" }, { name: "Samsung Galaxy A10", tier: "entry" }, { name: "Samsung Galaxy A12", tier: "entry" },
+      { name: "Samsung Galaxy A13", tier: "entry" }, { name: "Samsung Galaxy A14", tier: "entry" }, { name: "Samsung Galaxy A14 5G", tier: "entry" },
+      { name: "Samsung Galaxy A15", tier: "basic" }, { name: "Samsung Galaxy A15 5G", tier: "basic" },
+      { name: "Samsung Galaxy A16", tier: "basic" }, { name: "Samsung Galaxy A25", tier: "basic" }, { name: "Samsung Galaxy A34", tier: "mid" },
+      { name: "Samsung Galaxy A35", tier: "mid" }, { name: "Samsung Galaxy A54", tier: "mid" }, { name: "Samsung Galaxy A55", tier: "mid" },
+      { name: "Samsung Galaxy S22", tier: "premium" }, { name: "Samsung Galaxy S23", tier: "premium" }, { name: "Samsung Galaxy S23 Ultra", tier: "premium" },
+      { name: "Samsung Galaxy S24", tier: "flagship" }, { name: "Samsung Galaxy S24 Ultra", tier: "flagship" },
+      { name: "Samsung Galaxy S25", tier: "flagship" }, { name: "Samsung Galaxy S25 Ultra", tier: "flagship" },
+      { name: "Xiaomi Redmi 12", tier: "basic" }, { name: "Xiaomi Redmi 13C", tier: "basic" },
+      { name: "Xiaomi Redmi Note 11", tier: "basic" }, { name: "Xiaomi Redmi Note 12", tier: "mid" }, { name: "Xiaomi Redmi Note 13", tier: "mid" },
+      { name: "Xiaomi Redmi Note 13 Pro", tier: "mid" }, { name: "Xiaomi 13", tier: "premium" }, { name: "Xiaomi 14", tier: "flagship" },
+      { name: "Xiaomi 15", tier: "flagship" }, { name: "Poco X5", tier: "mid" }, { name: "Poco X6", tier: "mid" },
+      { name: "Poco F5", tier: "premium" }, { name: "Poco F6", tier: "premium" },
+      { name: "Motorola Moto G24", tier: "basic" }, { name: "Motorola Moto G54", tier: "basic" }, { name: "Motorola Moto G84", tier: "mid" },
+      { name: "Motorola Edge 40", tier: "mid" }, { name: "Motorola Edge 50 Fusion", tier: "mid" },
+      { name: "iPhone 11", tier: "premium" }, { name: "iPhone 12", tier: "premium" }, { name: "iPhone 13", tier: "premium" },
+      { name: "iPhone 14", tier: "premium" }, { name: "iPhone 14 Pro", tier: "premium" }, { name: "iPhone 15", tier: "premium" },
+      { name: "iPhone 15 Pro", tier: "flagship" }, { name: "iPhone 15 Pro Max", tier: "flagship" },
+      { name: "iPhone 16", tier: "flagship" }, { name: "iPhone 16 Pro", tier: "flagship" }, { name: "iPhone 16 Pro Max", tier: "flagship" },
+      { name: "Realme C55", tier: "basic" }, { name: "Realme 11 Pro", tier: "mid" }, { name: "Realme 12 Pro", tier: "mid" },
+      { name: "OPPO A78", tier: "basic" }, { name: "OPPO Reno 11", tier: "mid" }, { name: "Vivo Y27", tier: "basic" },
+      { name: "Vivo V29", tier: "mid" }, { name: "Infinix Hot 30", tier: "entry" }, { name: "Infinix Hot 40", tier: "entry" },
+      { name: "Tecno Spark 20", tier: "entry" }, { name: "OnePlus 12", tier: "flagship" }, { name: "Google Pixel 8", tier: "premium" },
+      { name: "ASUS ROG Phone 8", tier: "flagship" },
+    ];
 
-<script>
-const phones=[
-"Moto G9 Power","Moto G20","Moto G30","Moto G60","Moto G60S","Moto G100","Moto G200","Moto G22","Moto G32","Moto G52","Moto G72","Moto E20","Moto E32","Moto E40","Moto Edge 20","Moto Edge 30","Moto Edge 40",
-"Samsung A01","Samsung A01 Core","Samsung A02","Samsung A02S","Samsung A03","Samsung A03S","Samsung A10","Samsung A10S","Samsung A11","Samsung A12","Samsung A13","Samsung A14","Samsung A20","Samsung A20S","Samsung A21S","Samsung A22","Samsung A23","Samsung A24","Samsung A30","Samsung A30S","Samsung A31","Samsung A32","Samsung A32 5G","Samsung A33","Samsung A34","Samsung A50","Samsung A51","Samsung A52","Samsung A52S","Samsung A53","Samsung A54","Samsung S20","Samsung S20 FE","Samsung S21","Samsung S21 FE","Samsung S22","Samsung S23","Samsung S23 Ultra","Samsung S24 Ultra","Samsung M11","Samsung M12","Samsung M13","Samsung M22","Samsung M32","Samsung M51","Samsung M62",
-"Xiaomi Redmi 9","Redmi 9A","Redmi 9C","Redmi 10","Redmi 10A","Redmi Note 8","Redmi Note 8 Pro","Redmi Note 9","Redmi Note 9S","Redmi Note 10","Redmi Note 10 Pro","Redmi Note 11","Redmi Note 11 Pro","Redmi Note 12","Redmi Note 12 Pro","Poco X3","Poco X3 Pro","Poco X3 GT","Poco X4 Pro","Poco X5","Poco X5 Pro","Poco M3","Poco M4 Pro","Poco M5","Poco F3","Poco F4","Poco F5","Xiaomi 11 Lite","Xiaomi 12","Xiaomi 13",
-"iPhone 7","iPhone 7 Plus","iPhone 8","iPhone 8 Plus","iPhone X","iPhone XR","iPhone 11","iPhone 11 Pro","iPhone 12","iPhone 12 Mini","iPhone 13","iPhone 13 Mini","iPhone 13 Pro Max","iPhone 14","iPhone 14 Pro","iPhone 15","iPhone 15 Pro","iPhone 15 Pro Max",
-"Infinix Hot 10","Hot 11","Hot 12","Hot 20","Hot 30","Infinix Note 10","Note 12","Note 30","Infinix Smart 6","Smart 7",
-"Realme C11","C21","C25","C35","Realme 8","Realme 8 Pro","Realme 9","Realme 10","Realme GT Master",
-"OnePlus Nord","Nord 2","OnePlus 9","OnePlus 10","OnePlus 11",
-"Tecno Spark 7","Spark 8","Spark 10","Tecno Pova 3","Pova 4","Tecno Camon 18","Camon 19",
-"Positivo Twist","Positivo Q20","Multilaser G Max","LG K22","LG K52","Nokia G20","Nokia G60"
-];
+    function detectTierFromName(name) {
+      if (!name) return "mid";
+      const n = name.toLowerCase();
+      if (/ultra|fold|flip 5|flip 6|rog phone|redmagic|legion|xperia 1|find x|magic [56]|mate 6|pixel 9|pixel 8 pro|s24|s25|iphone 1[56]|oneplus 1[123]|xiaomi 1[45]|poco f[67]/.test(n)) return "flagship";
+      if (/pro max|s2[123]|s22|s23|iphone 1[234]|iphone x|pixel [678]|reno 1[12] pro|find n|edge 50|edge 40 pro|gt [2356]|x100|x90|f[456]|note 20|z flip|z fold/.test(n)) return "premium";
+      if (/\ba0[1-6]\b|\ba1[0-4]\b|\be1[0-3]\b|\be2[0-2]\b|\bc[1-3]\d\b|\bc4[0-9]\b|hot 1|hot 2|hot 3|spark [789]|spark 1[0-2]|itel|redmi a|redmi 9a|redmi 10a|redmi 12c|moto e|nokia g1|blade a/.test(n)) return "entry";
+      if (/\ba1[5-9]\b|\ba2[0-5]\b|\ba3[0-2]\b|m1[2-5]|m2[0-3]|m3[0-2]|g2[0-4]|g3[0-4]|g5[24]|redmi 1[12]|redmi note 1[01]|note 11|c5[0-9]|c6[0-9]|y0[0-9]|y1[0-9]|y2[0-7]|a5[0-9]|a7[0-9]|spark 20|camon 1[5-9]/.test(n)) return "basic";
+      if (/\ba3[3-9]\b|\ba5[0-5]\b|\ba7[0-3]\b|note 1[2-4]|poco x|poco m[56]|edge [234]0|reno [5-9]|reno 1[0-2]|v2[0-9]|v3[0-9]|nord|pixel [67]a|g6[0-9]|g7[0-9]|g8[0-9]|m5[0-5]/.test(n)) return "mid";
+      return "mid";
+    }
 
-let phone="Moto G9 Power", faixa='500-700', vars=[], idx=0, sensiVal=152, botaoVal=54;
-let userSeed = localStorage.getItem('ff_seed') || Math.random().toString(36).substring(2,9).toUpperCase() + Date.now().toString().slice(-4);
-localStorage.setItem('ff_seed', userSeed);
-let userId = 'FF-' + userSeed;
+    const ranges = {
+      entry:    { dpi: [320, 360], geral: [185, 200], red: [170, 185], s2x: [155, 170], s4x: [140, 155], awm: [125, 140], free: [90, 110] },
+      basic:    { dpi: [360, 400], geral: [175, 190], red: [160, 175], s2x: [145, 160], s4x: [132, 147], awm: [117, 132], free: [80, 100] },
+      mid:      { dpi: [390, 450], geral: [168, 182], red: [153, 167], s2x: [138, 152], s4x: [123, 137], awm: [108, 122], free: [70, 90] },
+      premium:  { dpi: [450, 520], geral: [155, 172], red: [140, 157], s2x: [125, 142], s4x: [110, 127], awm: [95, 112], free: [60, 80] },
+      flagship: { dpi: [520, 600], geral: [140, 155], red: [125, 140], s2x: [110, 125], s4x: [95, 110], awm: [80, 95], free: [50, 70] },
+    };
 
-function hashStr(s){let h=0;for(let i=0;i<s.length;i++){h=(h*31 + s.charCodeAt(i))>>>0}return h}
+    const styleMods = {
+      baixa:  { geral: -12, red: -10, s2x: -8, s4x: -5, awm: -3, free: -8 },
+      padrao: { geral: 0,   red: 0,   s2x: 0,  s4x: 0,  awm: 0,  free: 0 },
+      alta:   { geral: 12,  red: 10,  s2x: 8,  s4x: 5,  awm: 3,  free: 10 },
+    };
 
-function calcDpi(s){
- let min=faixa==='300-500'?300:faixa==='500-700'?500:700;
- let max=faixa==='300-500'?500:faixa==='500-700'?700:1600;
- let base = hashStr(phone+userId) % 80 - 40;
- let dpi = max - (s/200)*(max-min) + 45 + base*0.3;
- if(phone.toLowerCase().includes('g9')) dpi-=25;
- if(phone.toLowerCase().includes('iphone')) dpi+=35;
- if(phone.toLowerCase().includes('positivo')||phone.toLowerCase().includes('multilaser')) dpi+=80;
- return Math.max(min,Math.min(2500,Math.round(dpi)));
-}
+    const levelMods = {
+      baixa: { sensi: -8, dpiShift: -40, ciclos: 2 },
+      media: { sensi: 0,  dpiShift: 0,   ciclos: 3 },
+      alta:  { sensi: 10, dpiShift: 50,  ciclos: 5 },
+    };
 
-function updateS(v){
- sensiVal=v;
- document.getElementById('sB').textContent=v;
- let pct=(v/200)*100; document.getElementById('sensi').style.background=`linear-gradient(90deg,#ff0000 0%,#ff0000 ${pct}%,#1e1e35 ${pct}%,#1e1e35 100%)`;
- let dpi=calcDpi(v);
- document.getElementById('dpi').value=dpi;
- document.getElementById('dB').textContent=dpi;
- let pct2=((dpi-100)/2400)*100; document.getElementById('dpi').style.background=`linear-gradient(90deg,#00ff88 0%,#00ff88 ${pct2}%,#1e1e35 ${pct2}%,#1e1e35 100%)`;
- document.getElementById('dpiTip').textContent= v>=170? `💡 Sensi ${v} alta = DPI ${dpi} baixa pra não tremer (única pra você)` : `💡 Sensi ${v} = DPI ${dpi} que combina perfeito no ${phone}`;
- document.getElementById('uniqInfo').textContent='SEED: '+userId+' • '+phone;
- document.getElementById('varCount').textContent='VARIAÇÕES: ∞ • '+ (hashStr(userId+phone+v)%9999);
- document.getElementById('sel').textContent='✓ '+phone+' • ID único: '+userId+' • Ninguém tem igual';
-}
+    const ciclosRanges = {
+      baixa: [2, 3],
+      media: [3, 4],
+      alta:  [4, 6],
+    };
 
-const busca=document.getElementById('busca'), listaBusca=document.getElementById('listaBusca');
-function render(arr){
- listaBusca.innerHTML='';
- arr.slice(0,100).forEach(n=>{
-  let d=document.createElement('div');
-  d.innerHTML=`<b>${n}</b><small>${n.toLowerCase().includes('moto')?'Motorola':n.toLowerCase().includes('samsung')?'Samsung':n.toLowerCase().includes('iphone')?'Apple':n.toLowerCase().includes('poco')||n.toLowerCase().includes('redmi')?'Xiaomi':'Outro'}</small>`;
-  d.onclick=()=>{ phone=n; busca.value=n; listaBusca.style.display='none'; gerar(); };
-  listaBusca.appendChild(d);
- });
-}
-busca.addEventListener('input',()=>{let t=busca.value.toLowerCase();let f=t?phones.filter(p=>p.toLowerCase().includes(t)):phones;render(f);listaBusca.style.display='block';});
-busca.addEventListener('focus',()=>{render(phones);listaBusca.style.display='block';});
-document.addEventListener('click',e=>{if(!e.target.closest('.search')) listaBusca.style.display='none';});
+    let selectedPhone = null, selectedTier = null, selectedStyle = "baixa";
+    let dpiLevel = "media";
+    let isIOS = false;
+    let lastResult = null;
+    let genSeed = 0;
 
-function setNivel(tipo){document.getElementById('chip-baixa').classList.remove('active');document.getElementById('chip-media').classList.remove('active');document.getElementById('chip-alta').classList.remove('active');let val=152;if(tipo==='baixa'){val=95;document.getElementById('chip-baixa').classList.add('active');}if(tipo==='media'){val=152;document.getElementById('chip-media').classList.add('active');}if(tipo==='alta'){val=188;document.getElementById('chip-alta').classList.add('active');}sensiVal=val;document.getElementById('sensi').value=val;updateS(val);}
-function setFaixa(f){faixa=f;document.getElementById('dpi-baixa').classList.remove('active');document.getElementById('dpi-media').classList.remove('active');document.getElementById('dpi-alta').classList.remove('active');if(f==='300-500')document.getElementById('dpi-baixa').classList.add('active');if(f==='500-700')document.getElementById('dpi-media').classList.add('active');if(f==='700-1600')document.getElementById('dpi-alta').classList.add('active');updateS(sensiVal);}
-function setBotao(v){botaoVal=v;document.getElementById('bot').textContent=v+'%';document.getElementById('hudCode').textContent=(v>55?'2D':'3D')+'-'+v+'%';openTab('gen');gerar();}
+    const phoneSearch = document.getElementById("phoneSearch");
+    const searchList = document.getElementById("searchList");
+    const tierSelect = document.getElementById("tierSelect");
+    const btnGenerate = document.getElementById("btnGenerate");
+    const resultsEl = document.getElementById("results");
+    const sensiGrid = document.getElementById("sensiGrid");
+    const deviceChip = document.getElementById("deviceChip");
+    const dpiChip = document.getElementById("dpiChip");
+    const loader = document.getElementById("loader");
+    const toast = document.getElementById("toast");
 
-function gerar(nova=false){
- if(nova){userSeed=Math.random().toString(36).substring(2,9).toUpperCase()+Date.now().toString().slice(-4);userId='FF-'+userSeed;localStorage.setItem('ff_seed',userSeed);}
- let s=sensiVal;
- let h=hashStr(userId+phone+Date.now())%21 -10;
- s=Math.max(0,Math.min(200,s+h));
- if(phone.toLowerCase().includes('positivo')) s=Math.min(200,s+12);
- vars=[];
- for(let i=0;i<50;i++){
-  let jitter = (hashStr(userId+i+Date.now())%27)-13;
-  let g=Math.max(0,Math.min(200,s+jitter+ (i%7)-3));
-  if(i===49) g=200;
-  vars.push({g:g,d:calcDpi(g), idx:i+1});
- }
- idx=0; aplicar(vars[0]); document.getElementById('res').classList.remove('hidden'); document.getElementById('res').scrollIntoView({behavior:'smooth'}); gerarInfinitas();
-}
-function aplicar(v){
- document.getElementById('g').textContent=v.g;
- document.getElementById('r').textContent=Math.round(v.g*0.93);
- document.getElementById('m2').textContent=Math.round(v.g*0.85);
- document.getElementById('m4').textContent=Math.round(v.g*0.72);
- document.getElementById('awm').textContent=Math.round(v.g*0.51);
- document.getElementById('olha').textContent=Math.round(v.g*0.62);
- document.getElementById('mira').textContent=Math.round(v.g*0.58);
- document.getElementById('dpiF').textContent=v.d;
- document.getElementById('bot').textContent=botaoVal+'%';
- document.getElementById('hudCode').textContent=(botaoVal>55?'2D':'3D')+'-'+botaoVal+'%';
- document.getElementById('tipo').textContent=phone.toUpperCase().slice(0,18);
- document.getElementById('uid').textContent='ID ÚNICO: '+userId+'-'+(v.idx||1)+' • '+phone+' • DPI '+v.d+' • BOTÃO '+botaoVal+'% • VARIAÇÃO #'+(v.idx||1)+' • NUNCA REPETE • '+new Date().toLocaleTimeString();
- document.getElementById('gExtra').textContent='VARIAÇÃO #'+(v.idx||1)+' DE ∞ • SEED '+userId;
- updateS(v.g);
-}
-function trocar(){if(!vars.length) return; idx=(idx+1)%vars.length; aplicar(vars[idx]);}
-function openTab(id){['gen','famosos','huds','lista','inf'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('t-'+id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
-function usarFamoso(v,d,b){faixa=d<550?'300-500':d>750?'700-1600':'500-700';setFaixa(faixa);botaoVal=b;openTab('gen');setNivel(v>=180?'alta':v<=110?'baixa':'media');sensiVal=v;document.getElementById('sensi').value=v;document.getElementById('dpi').value=d;aplicar({g:v,d:d,idx:1});document.getElementById('res').classList.remove('hidden');}
-function renderAllPhones(){
- let c=document.getElementById('allPhonesList');
- c.innerHTML=phones.map(p=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #1a1a28;font-size:12px"><b>${p}</b><button onclick="phone='${p}';busca.value='${p}';openTab('gen');gerar()" style="padding:4px 10px;background:#ff0000;border:none;border-radius:100px;color:#fff;font-size:9px">USAR</button></div>`).join('');
-}
-function gerarInfinitas(){
- let grid=document.getElementById('infGrid');
- if(!grid) return;
- grid.innerHTML=vars.slice(0,20).map(v=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#0a0a12;border:1px solid #1e1e2e;border-radius:12px"><span style="font-family:'Orbitron';font-size:11px">#${v.idx} • GERAL ${v.g} • DPI ${v.d}</span><button onclick="aplicar({g:${v.g},d:${v.d},idx:${v.idx}});openTab('gen')" style="padding:6px 12px;background:#fff;color:#000;border:none;border-radius:100px;font-size:9px;font-weight:900">USAR</button></div>`).join('');
-}
-function renderPersonTags(){
- let t=document.getElementById('personTags');
- let tags=['ID: '+userId,'CEL: '+phone,'SEED ÚNICO','ANTI-BAN','0-200','DPI COMBINA','BOTÃO AUTO','∞ VARIAÇÕES'];
- t.innerHTML=tags.map(x=>`<span class="personTag">${x}</span>`).join('');
-}
-renderAllPhones(); renderPersonTags(); updateS(152);
-document.getElementById('sensi').addEventListener('input',e=>updateS(parseInt(e.target.value)));
-document.getElementById('dpi').addEventListener('input',e=>{document.getElementById('dB').textContent=e.target.value;});
-gerarInfinitas();
-</script>
+    phoneSearch.addEventListener("input", () => {
+      const q = phoneSearch.value.trim().toLowerCase();
+      if (q.length < 1) { searchList.classList.remove("open"); return; }
+      const matches = phones.filter(p => p.name.toLowerCase().includes(q)).slice(0, 15);
+      let html = "";
+      const tierNames = { entry: "Entrada", basic: "Básico", mid: "Intermediário", premium: "Premium", flagship: "Topo de linha" };
+      if (matches.length === 0) {
+        const autoTier = detectTierFromName(phoneSearch.value.trim());
+        html = '<div class="search-opt custom" data-name="' + phoneSearch.value.trim() + '" data-tier="' + autoTier + '">Usar "' + phoneSearch.value.trim() + '" · ' + tierNames[autoTier] + '</div>';
+        html += '<div class="search-opt hint">Ou escolha uma categoria abaixo</div>';
+      } else {
+        const exact = matches.some(p => p.name.toLowerCase() === q);
+        if (!exact && q.length >= 3) {
+          const autoTier = detectTierFromName(phoneSearch.value.trim());
+          html += '<div class="search-opt custom" data-name="' + phoneSearch.value.trim() + '" data-tier="' + autoTier + '">Usar: "' + phoneSearch.value.trim() + '"</div>';
+        }
+        html += matches.map(p => '<div class="search-opt" data-name="' + p.name + '" data-tier="' + p.tier + '">' + p.name + '</div>').join("");
+      }
+      searchList.innerHTML = html;
+      searchList.classList.add("open");
+    });
+
+    searchList.addEventListener("click", (e) => {
+      const item = e.target.closest(".search-opt");
+      if (!item || !item.dataset.name) return;
+      selectedPhone = item.dataset.name;
+      selectedTier = item.dataset.tier;
+      phoneSearch.value = selectedPhone;
+      tierSelect.value = selectedTier;
+      searchList.classList.remove("open");
+      isIOS = checkIOS(selectedPhone);
+      updateDpiCardUI();
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".search-wrap")) searchList.classList.remove("open");
+    });
+
+    tierSelect.addEventListener("change", () => {
+      selectedTier = tierSelect.value || null;
+      if (selectedTier && !selectedPhone) { selectedPhone = null; phoneSearch.value = ""; }
+    });
+
+    document.querySelectorAll(".style-opt").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".style-opt").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedStyle = btn.dataset.style;
+      });
+    });
+
+    function checkIOS(name) {
+      if (!name) return false;
+      return /iphone|ipad|ios/i.test(name);
+    }
+
+    function updateDpiCardUI() {
+      const label = document.getElementById("dpiCardLabel");
+      const hint = document.getElementById("dpiHint");
+      const row = document.getElementById("dpiRow");
+      if (isIOS) {
+        label.textContent = "Ciclos (iPhone)";
+        hint.textContent = "No iPhone não existe DPI. Use ciclos de mira para calibrar a velocidade do arraste.";
+        row.innerHTML =
+          '<button class="dpi-opt' + (dpiLevel === "baixa" ? " active" : "") + '" data-level="baixa">Baixo<small>2–3 ciclos</small></button>' +
+          '<button class="dpi-opt' + (dpiLevel === "media" ? " active" : "") + '" data-level="media">Médio<small>3–4 ciclos</small></button>' +
+          '<button class="dpi-opt' + (dpiLevel === "alta" ? " active" : "") + '" data-level="alta">Alto<small>4–6 ciclos</small></button>';
+      } else {
+        label.textContent = "Nível de DPI";
+        hint.textContent = "Android: DPI nas opções do desenvolvedor. Baixa = mais controle · Alta = mais rápida.";
+        row.innerHTML =
+          '<button class="dpi-opt' + (dpiLevel === "baixa" ? " active" : "") + '" data-level="baixa">Baixa<small>Mais controle</small></button>' +
+          '<button class="dpi-opt' + (dpiLevel === "media" ? " active" : "") + '" data-level="media">Média<small>Equilibrada</small></button>' +
+          '<button class="dpi-opt' + (dpiLevel === "alta" ? " active" : "") + '" data-level="alta">Alta<small>Mais velocidade</small></button>';
+      }
+      bindDpiButtons();
+    }
+
+    function bindDpiButtons() {
+      document.querySelectorAll(".dpi-opt").forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll(".dpi-opt").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          dpiLevel = btn.dataset.level;
+        };
+      });
+    }
+    bindDpiButtons();
+
+    function randomInRange(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    function clamp(val, min, max) { if (min === undefined) min = 1; if (max === undefined) max = 200; return Math.max(min, Math.min(max, val)); }
+
+    function generateSensi() {
+      genSeed++;
+      const tier = selectedTier || "mid";
+      const r = ranges[tier];
+      const mod = styleMods[selectedStyle];
+      const lv = levelMods[dpiLevel] || levelMods.media;
+
+      function roll(key) {
+        const lo = r[key][0], hi = r[key][1];
+        let v = randomInRange(lo, hi) + (mod[key] || 0) + lv.sensi + randomInRange(-6, 6);
+        return clamp(v);
+      }
+
+      const result = {
+        geral: roll("geral"),
+        red: roll("red"),
+        s2x: roll("s2x"),
+        s4x: roll("s4x"),
+        awm: roll("awm"),
+        free: roll("free"),
+        button: randomInRange(38, 55),
+        seed: genSeed,
+      };
+
+      if (isIOS) {
+        const cr = ciclosRanges[dpiLevel] || ciclosRanges.media;
+        result.ciclos = randomInRange(cr[0], cr[1]);
+        result.dpi = null;
+      } else {
+        let dpiLo = r.dpi[0] + lv.dpiShift;
+        let dpiHi = r.dpi[1] + lv.dpiShift;
+        dpiLo = Math.max(280, dpiLo);
+        dpiHi = Math.min(720, Math.max(dpiLo + 20, dpiHi));
+        result.dpi = randomInRange(dpiLo, dpiHi);
+        result.ciclos = null;
+      }
+      return result;
+    }
+
+    function renderResults(data) {
+      lastResult = data;
+      const name = selectedPhone || "Celular";
+      deviceChip.textContent = name;
+
+      if (isIOS && data.ciclos != null) {
+        dpiChip.style.display = "block";
+        dpiChip.textContent = "Ciclos: " + data.ciclos;
+      } else if (data.dpi != null) {
+        dpiChip.style.display = "block";
+        dpiChip.textContent = "DPI " + data.dpi;
+      } else {
+        dpiChip.style.display = "none";
+      }
+
+      const items = [
+        { label: "Geral", value: data.geral },
+        { label: "Ponto Vermelho", value: data.red },
+        { label: "Mira 2x", value: data.s2x },
+        { label: "Mira 4x", value: data.s4x },
+        { label: "AWM", value: data.awm },
+        { label: "Câmera Livre", value: data.free },
+      ];
+
+      if (isIOS && data.ciclos != null) {
+        items.push({ label: "Ciclos", value: data.ciclos });
+        items.push({ label: "Botão de Tiro", value: data.button + "%" });
+      } else if (data.dpi != null) {
+        items.push({ label: "DPI Sugerido", value: data.dpi });
+        items.push({ label: "Botão de Tiro", value: data.button + "%" });
+      }
+
+      sensiGrid.innerHTML = items.map(function(item) {
+        var v = typeof item.value === "number" ? item.value : "'" + item.value + "'";
+        return '<div class="sensi-cell"><button class="sc-copy" title="Copiar" onclick="copyValue(' + v + ')">copy</button><div class="sc-label">' + item.label + '</div><div class="sc-value">' + item.value + '</div></div>';
+      }).join("");
+      resultsEl.classList.add("show");
+      resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function syncPhoneState() {
+      const typedName = phoneSearch.value.trim();
+      if (typedName) {
+        selectedPhone = typedName;
+        const found = phones.find(p => p.name.toLowerCase() === typedName.toLowerCase());
+        selectedTier = found ? found.tier : detectTierFromName(typedName);
+      }
+      isIOS = checkIOS(selectedPhone || "");
+      updateDpiCardUI();
+      if (selectedTier && tierSelect.value !== selectedTier) tierSelect.value = selectedTier;
+    }
+
+    phoneSearch.addEventListener("change", () => {
+      if (phoneSearch.value.trim()) {
+        isIOS = checkIOS(phoneSearch.value.trim());
+        updateDpiCardUI();
+      }
+    });
+
+    btnGenerate.addEventListener("click", () => {
+      syncPhoneState();
+      if (!selectedTier && !selectedPhone) {
+        showToast("Digite ou selecione um celular", true);
+        return;
+      }
+      if (!selectedTier) selectedTier = "mid";
+      loader.classList.add("show");
+      setTimeout(() => {
+        const data = generateSensi();
+        loader.classList.remove("show");
+        renderResults(data);
+      }, 700 + Math.random() * 400);
+    });
+
+    document.getElementById("btnCopyAll").addEventListener("click", () => {
+      if (!lastResult) return;
+      let text = "disensi — Free Fire\n";
+      text += (selectedPhone || "Meu Celular") + "\n";
+      text += "──────────────\n";
+      text += "Geral: " + lastResult.geral + "\n";
+      text += "Ponto Vermelho: " + lastResult.red + "\n";
+      text += "Mira 2x: " + lastResult.s2x + "\n";
+      text += "Mira 4x: " + lastResult.s4x + "\n";
+      text += "AWM: " + lastResult.awm + "\n";
+      text += "Câmera Livre: " + lastResult.free + "\n";
+      if (isIOS && lastResult.ciclos != null) {
+        text += "Ciclos: " + lastResult.ciclos + "\n";
+        text += "Botão de Tiro: " + lastResult.button + "%\n";
+      } else if (lastResult.dpi != null) {
+        text += "DPI: " + lastResult.dpi + "\n";
+        text += "Botão de Tiro: " + lastResult.button + "%\n";
+      }
+      text += "──────────────\n";
+      text += "Estilo: " + selectedStyle + " · Nível: " + dpiLevel;
+      navigator.clipboard.writeText(text).then(() => showToast("Copiado"));
+    });
+
+    document.getElementById("btnRegen").addEventListener("click", () => {
+      loader.classList.add("show");
+      setTimeout(() => {
+        const data = generateSensi();
+        loader.classList.remove("show");
+        renderResults(data);
+        showToast("Nova variação");
+      }, 600);
+    });
+
+    document.getElementById("btnShare").addEventListener("click", () => {
+      if (!lastResult) return;
+      let text = "disensi — Free Fire\nGeral " + lastResult.geral + " · Red Dot " + lastResult.red + " · 2x " + lastResult.s2x + " · 4x " + lastResult.s4x + " · AWM " + lastResult.awm;
+      if (navigator.share) {
+        navigator.share({ title: "disensi", text: text }).catch(function() {});
+      } else {
+        navigator.clipboard.writeText(text).then(() => showToast("Copiado para compartilhar"));
+      }
+    });
+
+    function copyValue(val) {
+      navigator.clipboard.writeText(String(val)).then(() => showToast("Copiado: " + val));
+    }
+
+    function showToast(msg, isError) {
+      toast.textContent = msg;
+      toast.className = "toast" + (isError ? " err" : "");
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+
+    window.copyValue = copyValue;
+  </script>
 </body>
 </html>
